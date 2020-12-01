@@ -72,8 +72,10 @@ $ini = (microtime(true) * 1000);
 main();
 $end = (microtime(true) * 1000);
 echo 'With FOR: '. ($end - $ini) . "\n";
+// > With FOR: 54.929931640625
 
 $ini = (microtime(true) * 1000);
 refactor();
 $end = (microtime(true) * 1000);
 echo 'With DOWHILE: '. ($end - $ini) . "\n";
+// > With DOWHILE: 0.194091796875
