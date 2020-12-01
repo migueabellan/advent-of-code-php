@@ -1,0 +1,14 @@
+{
+    "name": "migueabellan/advent-of-code-2020",
+    "description": "Advent of Code 2020",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
