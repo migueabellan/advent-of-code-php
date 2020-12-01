@@ -35,11 +35,16 @@ function write(array $array): void
 
 $array = read();
 
-foreach ($array as $key => $value) {
-    foreach ($array as $key => $value) {
-        $array[$key] = $value;
+$result = [];
+
+for($i = 0; $i < count($array); $i++) {
+    for($j = $i + 1; $j < count($array); $j++) {
+        for($k = $j + 1; $k < count($array); $k++) {
+            if ($array[$i] + $array[$j] + $array[$k] === 2020) {
+                $result[] = $array[$i] * $array[$j] * $array[$k];
+            }
+        }
     }
-    $array[$key] = $value;
 }
 
-write($array);
+write($result);

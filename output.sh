@@ -1,1 +1,1 @@
-docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php base/index.php
+docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php 01/index.php
