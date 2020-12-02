@@ -6,8 +6,8 @@
 
 This repo contains my solutions to [Advent of Code 2020](https://adventofcode.com/2020).
 
-- [Day 1](app/Day1/README.md)
-- [Day 2](app/Day2/README.md)
+- [Day 1](app/Day01/README.md)
+- [Day 2](app/Day02/README.md)
 
 ---
 
