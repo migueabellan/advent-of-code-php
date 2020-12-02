@@ -28,7 +28,7 @@ class Index
         fclose($out);
     }
         
-    public function withFor(): void
+    public static function withFor(): void
     {       
         $array = self::read();
 
@@ -46,7 +46,7 @@ class Index
         self::write($result);
     }
 
-    public function withDoWhile(): void
+    public static function withDoWhile(): void
     {       
         $array = self::read();
 

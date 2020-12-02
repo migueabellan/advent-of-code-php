@@ -34,7 +34,7 @@ class Index
         fclose($out);
     }
         
-    public function puzzle1(): void
+    public static function puzzle1(): void
     {       
         $array = self::read();
 
@@ -55,7 +55,7 @@ class Index
         self::write($result);
     }
 
-    public function puzzle2(): void
+    public static function puzzle2(): void
     {       
         $array = self::read();
 

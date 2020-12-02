@@ -2,6 +2,14 @@
 
 ## Execution time
 
+Part One
+
 ```sh
-$ Time: 3.02
+$ Time: 0.01 ms
+```
+
+Part Two
+
+```sh
+$ Time: 1.48 ms
 ```

@@ -2,14 +2,14 @@
 
 ## Execution time
 
-Using FOR loop
+Part Two: Using FOR loop
 
 ```sh
-$ Time: 54.92 ms
+$ Time: 71.92 ms
 ```
 
-Using DO WHILE loop
+Part Two: Using DO WHILE loop
 
 ```sh
-$ Time: 0.19 ms
+$ Time: 0.48 ms
 ```
