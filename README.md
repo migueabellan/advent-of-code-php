@@ -26,8 +26,7 @@ $ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php 
 ```
 
 ```sh
-$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php
-
+$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php [...day2-1...]
 ```
 
 ## Installation without docker
@@ -45,5 +44,5 @@ $ php ./composer.phar install
 ```
 
 ```sh
-$ php index.php
+$ php index.php [...day2-1...]
 ```
