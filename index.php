@@ -6,34 +6,32 @@ use App\Controller\Day01;
 use App\Controller\Day02;
 use App\Controller\Day03;
 
+$d1 = new Day01();
+$d2 = new Day02();
+$d3 = new Day03();
+
 $ini = (microtime(true) * 1000);
 
 switch ($argv[1]) {
     case 'day1-for':
-        $puzzle = new Day01();
-        $puzzle->execFor();
+        $d1->execFor();
         break;
     case 'day1-while':
-        $puzzle = new Day01();
-        $puzzle->execWhile();
+        $d1->execWhile();
         break;
 
     case 'day2-2':
-        $puzzle = new Day02();
-        $puzzle->exec1();
+        $d2->exec1();
         break;
     case 'day2-2':
-        $puzzle = new Day02();
-        $puzzle->exec2();
+        $d2->exec2();
         break;
 
     case 'day3-1':
-        $puzzle = new Day03();
-        $puzzle->exec1();
+        $d3->exec1();
         break;
     case 'day3-2':
-        $puzzle = new Day03();
-        $puzzle->exec2();
+        $d3->exec2();
         break;
 }
 
