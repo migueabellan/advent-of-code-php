@@ -3,9 +3,8 @@
 namespace App\Day01;
 
 use App\AbstractController;
-use App\InterfaceController;
 
-class Index extends AbstractController implements InterfaceController
+class Index extends AbstractController
 {   
     /**
      * @see AbstractController
