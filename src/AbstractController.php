@@ -28,9 +28,9 @@ abstract class AbstractController implements InterfaceController
      */
     protected function getPathIn(): string
     {
-        $rc = new ReflectionClass(get_class($this));
+        $class = (new \ReflectionClass($this))->getShortName();
 
-        return dirname($rc->getFileName()) . '/' . $this->file_in;
+        return dirname(__DIR__).'/public/'.$class.$this->file_in;
     }
 
     /**
@@ -40,9 +40,9 @@ abstract class AbstractController implements InterfaceController
      */
     protected function getPathOut(): string
     {
-        $rc = new ReflectionClass(get_class($this));
+        $class = (new \ReflectionClass($this))->getShortName();
 
-        return dirname($rc->getFileName()) . '/' . $this->file_out;
+        return dirname(__DIR__).'/public/'.$class.$this->file_out;
     }
 
     /**

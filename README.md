@@ -2,15 +2,7 @@
 
 ![Advent Of Code](https://img.shields.io/badge/Advent%20Of%20Code-2020-blue?style=flat-square) ![php](https://img.shields.io/github/languages/top/migueabellan/advent-of-code-2020?style=flat-square)
 
-## Puzzles
-
-This repo contains my solutions to [Advent of Code 2020](https://adventofcode.com/2020).
-
-- [Day 1](app/Day01/README.md)
-- [Day 2](app/Day02/README.md)
-- [Day 3](app/Day03/README.md)
-
----
+<br />
 
 ## Installation with docker
 

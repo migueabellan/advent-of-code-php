@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Day01\Index as Day01;
-use App\Day02\Index as Day02;
-use App\Day03\Index as Day03;
+use App\Controller\Day01;
+use App\Controller\Day02;
+use App\Controller\Day03;
 
 $ini = (microtime(true) * 1000);
 
@@ -17,6 +17,7 @@ switch ($argv[1]) {
         $puzzle = new Day01();
         $puzzle->execWhile();
         break;
+
     case 'day2-2':
         $puzzle = new Day02();
         $puzzle->exec1();
@@ -25,6 +26,7 @@ switch ($argv[1]) {
         $puzzle = new Day02();
         $puzzle->exec2();
         break;
+
     case 'day3-1':
         $puzzle = new Day03();
         $puzzle->exec1();

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Day02;
+namespace App\Controller;
 
 use App\AbstractController;
 
-class Index extends AbstractController
+class Day02 extends AbstractController
 {   
     /**
      * @see AbstractController
