@@ -30,7 +30,9 @@ class Index extends AbstractController implements InterfaceController
     public function write(string $string): void
     {
         $out = fopen($this->getPathOut(), 'w');
+
         fwrite($out, $string);
+        
         fclose($out);
     }
         

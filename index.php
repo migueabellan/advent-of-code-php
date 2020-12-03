@@ -18,10 +18,12 @@ switch ($argv[1]) {
         $puzzle->execWhile();
         break;
     case 'day2-2':
-        Day02::puzzle2();
+        $puzzle = new Day02();
+        $puzzle->exec1();
         break;
     case 'day2-2':
-        Day02::puzzle2();
+        $puzzle = new Day02();
+        $puzzle->exec2();
         break;
     case 'day3-1':
         $puzzle = new Day03();

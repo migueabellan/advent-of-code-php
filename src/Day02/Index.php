@@ -2,13 +2,18 @@
 
 namespace App\Day02;
 
-class Index
-{   
-    private static function read(): array
-    {
-        $path = dirname(__FILE__).'/_in.txt';
+use App\AbstractController;
+use App\InterfaceController;
 
-        $file = fopen($path, "r");
+class Index extends AbstractController implements InterfaceController
+{   
+    /**
+     * @see AbstractController
+     */
+    public function read(): array
+    {
+        $file = fopen($this->getPathIn(), "r");
+
         while (($line = fgets($file)) !== false) {
             [$policy, $letter, $pass] = explode(' ', $line);
 
@@ -27,16 +32,21 @@ class Index
         return $array;
     }
 
-    private static function write(int $result): void
+    /**
+     * @see AbstractController
+     */
+    public function write(string $string): void
     {
-        $out = fopen(dirname(__FILE__).'/_out.txt', 'w');
-        fwrite($out, $result);
+        $out = fopen($this->getPathOut(), 'w');
+
+        fwrite($out, $string);
+
         fclose($out);
     }
         
-    public static function puzzle1(): void
+    public function exec1(): void
     {       
-        $array = self::read();
+        $array = $this->read();
 
         $result = 0;
         foreach ($array as $case) {
@@ -52,12 +62,12 @@ class Index
             }
         }
 
-        self::write($result);
+        $this->write((string)$result);
     }
 
-    public static function puzzle2(): void
+    public function exec2(): void
     {       
-        $array = self::read();
+        $array = $this->read();
 
         $result = 0;
         foreach ($array as $case) {
@@ -77,6 +87,6 @@ class Index
             }
         }
 
-        self::write($result);
+        $this->write((string)$result);
     }
 }
