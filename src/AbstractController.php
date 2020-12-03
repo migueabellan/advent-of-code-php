@@ -21,6 +21,11 @@ abstract class AbstractController implements InterfaceController
      */
     protected $file_out = '_out.txt';
 
+    /**
+     * Get path of the input file
+     *
+     * @return string
+     */
     protected function getPathIn(): string
     {
         $rc = new ReflectionClass(get_class($this));
@@ -28,6 +33,11 @@ abstract class AbstractController implements InterfaceController
         return dirname($rc->getFileName()) . '/' . $this->file_in;
     }
 
+    /**
+     * Get path of the output file
+     *
+     * @return string
+     */
     protected function getPathOut(): string
     {
         $rc = new ReflectionClass(get_class($this));
@@ -35,6 +45,11 @@ abstract class AbstractController implements InterfaceController
         return dirname($rc->getFileName()) . '/' . $this->file_out;
     }
 
+    /**
+     * Map input file to array in default mode
+     * 
+     * @see InterfaceController
+     */
     public function read(): array
     {
         $file = fopen($this->getPathIn(), "r");
@@ -48,6 +63,11 @@ abstract class AbstractController implements InterfaceController
         return $array;
     }
 
+    /**
+     * Write output in a file in default mode
+     * 
+     * @see InterfaceController
+     */
     public function write(string $string): void
     {
         $out = fopen($this->getPathOut(), 'w');

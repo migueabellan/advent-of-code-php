@@ -9,7 +9,19 @@ namespace App;
  */
 interface InterfaceController
 {
+    /**
+     * Map input file to array
+     *
+     * @return array
+     */
     public function read(): array;
 
+    /**
+     * Write output in a file
+     *
+     * @param string $string
+     * 
+     * @return void
+     */
     public function write(string $string): void;
 }
