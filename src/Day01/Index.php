@@ -2,13 +2,18 @@
 
 namespace App\Day01;
 
-class Index
-{   
-    private static function read(): array
-    {
-        $path = dirname(__FILE__).'/_in.txt';
+use App\AbstractController;
+use App\InterfaceController;
 
-        $file = fopen($path, "r");
+class Index extends AbstractController implements InterfaceController
+{   
+    /**
+     * @see AbstractController
+     */
+    public function read(): array
+    {
+        $file = fopen($this->getPathIn(), "r");
+
         while (($line = fgets($file)) !== false) {
             $array[] = (int)$line;
         }
@@ -19,36 +24,37 @@ class Index
         return $array;
     }
 
-    private static function write(array $array): void
+    /**
+     * @see AbstractController
+     */
+    public function write(string $string): void
     {
-        $out = fopen(dirname(__FILE__).'/_out.txt', 'w');
-        foreach ($array as $value) {
-            fwrite($out, $value."\n");
-        }
+        $out = fopen($this->getPathOut(), 'w');
+        fwrite($out, $string);
         fclose($out);
     }
         
-    public static function withFor(): void
+    public function execFor(): void
     {       
-        $array = self::read();
+        $array = $this->read();
 
         $result = [];    
         for($i = 0; $i < count($array); $i++) {
             for($j = $i + 1; $j < count($array); $j++) {
                 for($k = $j + 1; $k < count($array); $k++) {
                     if ($array[$i] + $array[$j] + $array[$k] === 2020) {
-                        $result[] = $array[$i] * $array[$j] * $array[$k];
+                        $result = $array[$i] * $array[$j] * $array[$k];
                     }
                 }
             }
         }
 
-        self::write($result);
+        $this->write((string)$result);
     }
 
-    public static function withDoWhile(): void
+    public function execWhile(): void
     {       
-        $array = self::read();
+        $array = $this->read();
 
         $result = [];
         $i = 0;
@@ -61,12 +67,12 @@ class Index
                 do {
                     $three = $array[$i] + $array[$j] + $array[$k];
                     if ($three === 2020) {
-                        $result[] = $array[$i] * $array[$j] * $array[$k];
+                        $result = $array[$i] * $array[$j] * $array[$k];
                     }
                 } while($k++ && $three < 2020 && $k < count($array) - 1);
             } while($j++ && $two < 2020 && $j < count($array) - 1);
         } while($i++ && $one < 2020 && $i < count($array) - 1);
 
-        self::write($result);
+        $this->write((string)$result);
     }
 }

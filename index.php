@@ -10,10 +10,12 @@ $ini = (microtime(true) * 1000);
 
 switch ($argv[1]) {
     case 'day1-for':
-        Day01::withFor();
+        $puzzle = new Day01();
+        $puzzle->execFor();
         break;
     case 'day1-while':
-        Day01::withDoWhile();
+        $puzzle = new Day01();
+        $puzzle->execWhile();
         break;
     case 'day2-2':
         Day02::puzzle2();

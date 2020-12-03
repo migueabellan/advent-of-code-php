@@ -3,8 +3,9 @@
 namespace App\Day03;
 
 use App\AbstractController;
+use App\InterfaceController;
 
-class Index extends AbstractController
+class Index extends AbstractController implements InterfaceController
 {
     /**
      * @see AbstractController
@@ -12,9 +13,12 @@ class Index extends AbstractController
     public function read(): array
     {
         $file = fopen($this->getPathIn(), "r");
+
         while (($line = fgets($file)) !== false) {
             $array[] = $line;
         }
+
+        fclose($file);
 
         return $array;
     }
