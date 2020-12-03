@@ -3,38 +3,9 @@
 namespace App\Day03;
 
 use App\AbstractController;
-use App\InterfaceController;
 
-class Index extends AbstractController implements InterfaceController
+class Index extends AbstractController
 {
-    /**
-     * @see AbstractController
-     */
-    public function read(): array
-    {
-        $file = fopen($this->getPathIn(), "r");
-
-        while (($line = fgets($file)) !== false) {
-            $array[] = $line;
-        }
-
-        fclose($file);
-
-        return $array;
-    }
-
-    /**
-     * @see AbstractController
-     */
-    public function write(string $string): void
-    {
-        $out = fopen($this->getPathOut(), 'w');
-
-        fwrite($out, $string);
-        
-        fclose($out);
-    }
-
     public function exec1(): void
     {
         $array = $this->read();

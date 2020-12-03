@@ -31,18 +31,6 @@ class Index extends AbstractController implements InterfaceController
 
         return $array;
     }
-
-    /**
-     * @see AbstractController
-     */
-    public function write(string $string): void
-    {
-        $out = fopen($this->getPathOut(), 'w');
-
-        fwrite($out, $string);
-
-        fclose($out);
-    }
         
     public function exec1(): void
     {       

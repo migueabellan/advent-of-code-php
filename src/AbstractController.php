@@ -9,7 +9,7 @@ use ReflectionClass;
  *
  * @author Miguel Ángel Abellán <info@migueabellan.es>
  */
-abstract class AbstractController
+abstract class AbstractController implements InterfaceController
 {
     /**
      * @var string
@@ -33,5 +33,27 @@ abstract class AbstractController
         $rc = new ReflectionClass(get_class($this));
 
         return dirname($rc->getFileName()) . '/' . $this->file_out;
+    }
+
+    public function read(): array
+    {
+        $file = fopen($this->getPathIn(), "r");
+
+        while (($line = fgets($file)) !== false){
+            $array[] = $line;
+        }
+        
+        fclose($file);
+
+        return $array;
+    }
+
+    public function write(string $string): void
+    {
+        $out = fopen($this->getPathOut(), 'w');
+
+        fwrite($out, $string);
+
+        fclose($out);
     }
 }
