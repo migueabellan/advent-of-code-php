@@ -19,7 +19,7 @@ $ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php 
 ```
 
 ```sh
-$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php [...day2-1...]
+$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php DayN PuzzleN
 ```
 
 ## Installation without docker
@@ -37,5 +37,5 @@ $ php ./composer.phar install
 ```
 
 ```sh
-$ php index.php [...day2-1...]
+$ php index.php DayN PuzzleN
 ```

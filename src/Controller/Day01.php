@@ -23,17 +23,15 @@ class Day01 extends AbstractController
         return $array;
     }
         
-    public function execFor(): void
+    public function exec1(): void
     {       
         $array = $this->read();
 
         $result = [];    
         for($i = 0; $i < count($array); $i++) {
             for($j = $i + 1; $j < count($array); $j++) {
-                for($k = $j + 1; $k < count($array); $k++) {
-                    if ($array[$i] + $array[$j] + $array[$k] === 2020) {
-                        $result = $array[$i] * $array[$j] * $array[$k];
-                    }
+                if ($array[$i] + $array[$j] === 2020) {
+                    $result = $array[$i] * $array[$j];
                 }
             }
         }
@@ -41,7 +39,7 @@ class Day01 extends AbstractController
         $this->write((string)$result);
     }
 
-    public function execWhile(): void
+    public function exec2(): void
     {       
         $array = $this->read();
 
