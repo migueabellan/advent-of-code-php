@@ -3,6 +3,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 define("INI_TIME", (microtime(true) * 1000));
+define('BASE_PATH', dirname(realpath(__FILE__)));
+define('PUBLIC_PATH', BASE_PATH . '/public/');
 
 $advent = (int)$argv[1] <= 9 ? "0$argv[1]" : $argv[1];
 $puzzle = (int)$argv[2];

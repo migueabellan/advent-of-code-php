@@ -20,19 +20,7 @@ abstract class AbstractController implements InterfaceController
     {
         $class = (new \ReflectionClass($this))->getShortName();
 
-        return dirname(__DIR__).'/public/'.$class.'_in.txt';
-    }
-
-    /**
-     * Get path of the output file
-     *
-     * @return string
-     */
-    protected function getPathOut(): string
-    {
-        $class = (new \ReflectionClass($this))->getShortName();
-
-        return dirname(__DIR__).'/public/'.$class.$this->file_out;
+        return PUBLIC_PATH.$class.'_in.txt';
     }
 
     /**
