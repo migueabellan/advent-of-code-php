@@ -2,14 +2,14 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+define("INI_TIME", (microtime(true) * 1000));
+
 $advent = (int)$argv[1] <= 9 ? "0$argv[1]" : $argv[1];
 $puzzle = (int)$argv[2];
 
 $class = "App\\Controller\\Day$advent";
 
 $runner = new $class();
-
-$ini = (microtime(true) * 1000);
 
 switch ($puzzle) {
     case 1:
@@ -19,8 +19,6 @@ switch ($puzzle) {
         $runner->exec2();
         break;
     default:
-        echo "Error \n";
+        echo "\e[0;30;41m Wrong input \e[0m\n";
+        echo "$ php index.php DayN PuzzleN \n";
 }
-
-$end = (microtime(true) * 1000);
-echo 'Time: '. ($end - $ini) . "\n";

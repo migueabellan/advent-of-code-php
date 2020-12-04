@@ -12,16 +12,6 @@ use ReflectionClass;
 abstract class AbstractController implements InterfaceController
 {
     /**
-     * @var string
-     */
-    protected $file_in = '_in.txt';
-
-    /**
-     * @var string
-     */
-    protected $file_out = '_out.txt';
-
-    /**
      * Get path of the input file
      *
      * @return string
@@ -30,7 +20,7 @@ abstract class AbstractController implements InterfaceController
     {
         $class = (new \ReflectionClass($this))->getShortName();
 
-        return dirname(__DIR__).'/public/'.$class.$this->file_in;
+        return dirname(__DIR__).'/public/'.$class.'_in.txt';
     }
 
     /**
@@ -64,16 +54,14 @@ abstract class AbstractController implements InterfaceController
     }
 
     /**
-     * Write output in a file in default mode
+     * Write output in a console
      * 
      * @see InterfaceController
      */
     public function write(string $string): void
-    {
-        $out = fopen($this->getPathOut(), 'w');
+    {        
+        echo "\nResult: \e[0;30;42m " . $string . " \e[0m\n\n";
 
-        fwrite($out, $string);
-
-        fclose($out);
+        echo 'Time: ' . ((microtime(true) * 1000) - INI_TIME) . "\n";
     }
 }

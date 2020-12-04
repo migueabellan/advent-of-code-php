@@ -17,7 +17,7 @@ interface InterfaceController
     public function read(): array;
 
     /**
-     * Write output in a file
+     * Write output in
      *
      * @param string $string
      * 
