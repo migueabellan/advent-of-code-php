@@ -40,16 +40,7 @@ class IndexController extends AbstractController
 
         $array_complete = range(min($array), max($array));
 
-        $result = current((array_diff($array_complete, $array)));
-
-        /*
-        for ($i = min($array); $i < max($array); $i++) {
-            if (!isset($array[$i])) {
-                $result = $array[$i - 1] + 1;
-                break;
-            }
-        }
-        */
+        $result = current(array_diff($array_complete, $array));
 
         return (string)$result;
     }
