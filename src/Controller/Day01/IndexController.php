@@ -6,6 +6,8 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    private const YEAR = 2020;
+
     /**
      * @see AbstractController
      */
@@ -19,7 +21,7 @@ class IndexController extends AbstractController
             }
             fclose($file);
 
-            sort($array);
+            sort($array, SORT_NUMERIC);
         }
 
         return $array;
@@ -29,11 +31,12 @@ class IndexController extends AbstractController
     public function exec1(array $array = []): string
     {
         $result = 0;
-        for ($i = 0; $i < count($array); $i++) {
-            for ($j = $i + 1; $j < count($array); $j++) {
-                if ($array[$i] + $array[$j] === 2020) {
-                    $result = $array[$i] * $array[$j];
-                }
+
+        foreach ($array as $number) {
+            $diff = static::YEAR - $number;
+            if (in_array($diff, $array, true)) {
+                $result = $number * $diff;
+                break;
             }
         }
 
@@ -43,21 +46,17 @@ class IndexController extends AbstractController
     public function exec2(array $array = []): string
     {
         $result = 0;
-        $i = 0;
-        do {
-            $one = $array[$i];
-            $j = $i + 1;
-            do {
-                $two = $array[$i] + $array[$j];
-                $k = $j + 1;
-                do {
-                    $three = $array[$i] + $array[$j] + $array[$k];
-                    if ($three === 2020) {
-                        $result = $array[$i] * $array[$j] * $array[$k];
-                    }
-                } while ($k++ && $three < 2020 && $k < count($array) - 1);
-            } while ($j++ && $two < 2020 && $j < count($array) - 1);
-        } while ($i++ && $one < 2020 && $i < count($array) - 1);
+
+        for ($i = 0; $i < count($array); $i++) {
+            $diff = static::YEAR - $array[$i];
+            for ($j = $i + 1; $j < count($array); $j++) {
+                $diff = $diff - $array[$j];
+                if (in_array($diff, $array, true)) {
+                    $result = $array[$i] * $array[$j] * $diff;
+                    break;
+                }
+            }
+        }
 
         return (string)$result;
     }
