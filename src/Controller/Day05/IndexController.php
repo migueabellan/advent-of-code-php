@@ -15,9 +15,11 @@ class IndexController extends AbstractController
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
-                $binary = preg_replace(['/F|L/', '/B|R/'], [0, 1], $line);
+                // $binary = preg_replace(['/F|L/', '/B|R/'], [0, 1], $line);
+                $binary = strtr($line, 'FBLR', '0101');
+                $decimal = bindec($binary);
 
-                $array[bindec($binary)] = bindec($binary);
+                $array[$decimal] = $decimal;
             }
             fclose($file);
         }
@@ -36,12 +38,18 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
+        $array_complete = range(min($array), max($array));
+
+        $result = current((array_diff($array_complete, $array)));
+
+        /*
         for ($i = min($array); $i < max($array); $i++) {
             if (!isset($array[$i])) {
                 $result = $array[$i - 1] + 1;
                 break;
             }
         }
+        */
 
         return (string)$result;
     }
