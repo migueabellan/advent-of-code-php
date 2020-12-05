@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Controller;
+namespace Tests\Controller\Day03;
 
-use App\Controller\Day03;
+use App\Controller\Day03\IndexController;
 use PHPUnit\Framework\TestCase;
 
-class Day03Test extends TestCase
+class IndexControllerTest extends TestCase
 {
     /**
      * @var object
@@ -19,18 +19,18 @@ class Day03Test extends TestCase
 
     protected function setUp(): void
     {
-        $this->runner = new Day03();
+        $this->runner = new IndexController();
 
         $this->array = $this->runner->read();
     }
 
     public function testExec1(): void
     {
-        $this->assertEquals(7, $this->runner->exec1($this->array));
+        $this->assertEquals(247, $this->runner->exec1($this->array));
     }
 
     public function testExec2(): void
     {
-        $this->assertEquals(336, $this->runner->exec2($this->array));
+        $this->assertEquals(2983070376, $this->runner->exec2($this->array));
     }
 }

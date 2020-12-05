@@ -2,12 +2,10 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-define('BASE_PATH', dirname(realpath(__FILE__)));
-
 $advent = (int)$argv[1] <= 9 ? "0$argv[1]" : $argv[1];
 $puzzle = (int)$argv[2];
 
-$class = "App\\Controller\\Day$advent";
+$class = "App\\Controller\\Day$advent\\IndexController";
 
 $runner = new $class();
 

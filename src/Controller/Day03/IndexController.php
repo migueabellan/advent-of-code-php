@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Day03;
 
-use App\AbstractController;
+use App\Controller\AbstractController;
 
-class Day03 extends AbstractController
+class IndexController extends AbstractController
 {
     public function exec1(array $array = []): string
     {

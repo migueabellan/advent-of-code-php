@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Controller;
 
 /**
  * Provides common features needed
@@ -26,9 +26,11 @@ abstract class AbstractController implements InterfaceController
      */
     protected function getPathIn(): string
     {
-        $class = (new \ReflectionClass($this))->getShortName();
+        $path = (string)(new \ReflectionClass($this))->getFileName();
 
-        return BASE_PATH.'/public/'.$class.'_in.txt';
+        $name = (string)(new \ReflectionClass($this))->getShortName();
+
+        return str_replace($name.'.php', '_in.txt', $path);
     }
 
     /**
