@@ -6,29 +6,29 @@ use App\AbstractController;
 
 class Day05 extends AbstractController
 {
+    /**
+     * @see AbstractController
+     */
+    public function read(): array
+    {
+        $file = fopen($this->getPathIn(), "r");
+
+        while (($line = fgets($file)) !== false){
+            $binary = preg_replace(['/F|L/', '/B|R/'], [0, 1], $line);
+
+            $array[bindec($binary)] = bindec($binary);
+        }
+        
+        fclose($file);
+
+        return $array;
+    }
+
     public function exec1(): void
     {
         $array = $this->read();
 
-        $result = 0;
-
-        foreach ($array as $seat) {
-            $row = mb_strcut($seat, 0, 7);
-            $row = str_replace('F', 0, $row);
-            $row = str_replace('B', 1, $row);
-            $num_row = bindec(mb_strcut($row, 0, 7));
-
-            $col = mb_strcut($seat, 7, 10);
-            $col = str_replace('L', 0, $col);
-            $col = str_replace('R', 1, $col);
-            $num_col = bindec(mb_strcut($col, 0, 7));
-
-            $id = ($num_row * 8) + $num_col;
-
-            if ($id > $result) {
-                $result = $id;
-            }
-        }
+        $result = max($array);
 
         $this->write((string)$result);
     }
@@ -37,33 +37,15 @@ class Day05 extends AbstractController
     {
         $array = $this->read();
 
-        $result = [];
-        
-        foreach ($array as $seat) {
-            $row = mb_strcut($seat, 0, 7);
-            $row = str_replace('F', 0, $row);
-            $row = str_replace('B', 1, $row);
-            $num_row = bindec(mb_strcut($row, 0, 7));
+        $result = 0;
 
-            $col = mb_strcut($seat, 7, 10);
-            $col = str_replace('L', 0, $col);
-            $col = str_replace('R', 1, $col);
-            $num_col = bindec(mb_strcut($col, 0, 7));
-
-            $id = ($num_row * 8) + $num_col;
-
-            $result[] = $id;
-        }
-
-        sort($result);
-
-        $myseat = 0;
-        foreach ($result as $k => $seat) {
-            if ($result[$k] + 2 === $result[$k + 1]) {
-                $myseat = $seat + 1;
+        for ($i = min($array); $i < max($array); $i++) {
+            if (!isset($array[$i])) {
+                $result = $array[$i - 1] + 1;
+                break;
             }
         }
 
-        $this->write((string)$myseat);
+        $this->write((string)$result);
     }
 }
