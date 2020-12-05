@@ -1,6 +1,8 @@
 # Advent Of Code 2020
 
-![Advent Of Code](https://img.shields.io/badge/Advent%20Of%20Code-2020-blue?style=flat-square) ![php](https://img.shields.io/github/languages/top/migueabellan/advent-of-code-2020?style=flat-square)
+![Github](https://github.com/migueabellan/advent-of-code-2020/workflows/Test/badge.svg)
+![Advent Of Code](https://img.shields.io/badge/Advent%20Of%20Code-2020-blue?style=flat-square)
+![php](https://img.shields.io/github/languages/top/migueabellan/advent-of-code-2020?style=flat-square)
 
 <br />
 
