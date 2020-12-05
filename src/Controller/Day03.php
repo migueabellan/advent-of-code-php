@@ -47,7 +47,7 @@ class Day03 extends AbstractController
 
         $result = 1;
         foreach ($results as $v) {
-            $result *= $v; 
+            $result *= $v;
         }
 
         return (string)$result;

@@ -11,26 +11,25 @@ class Day04 extends AbstractController
      */
     public function read(): array
     {
-        $file = fopen($this->getPathIn(), "r");
+        $array = [];
 
-        $i = 0;
-
-        while (($line = fgets($file)) !== false) {
-            
-            if ($line === "\n") {
-                $i++;
-            }
-
-            $fields = explode(' ', trim($line));
-            foreach ($fields as $field) {
-
-                [$key, $value] = explode(':', $field);
-                if ($key !== '') {
-                    $array[$i][$key] = $value;
+        if ($file = fopen($this->getPathIn(), 'r')) {
+            $i = 0;
+            while (($line = fgets($file)) !== false) {
+                if ($line === "\n") {
+                    $i++;
                 }
-            }            
+
+                $fields = explode(' ', trim($line));
+                foreach ($fields as $field) {
+                    [$key, $value] = explode(':', $field);
+                    if ($key !== '') {
+                        $array[$i][$key] = $value;
+                    }
+                }
+            }
+            fclose($file);
         }
-        fclose($file);
 
         return $array;
     }

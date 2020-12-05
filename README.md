@@ -22,10 +22,6 @@ $ docker run -it --rm -v "$PWD":/app composer install
 $ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php DayN PuzzleN
 ```
 
-```sh
-$ docker run -it --rm --name aoc -v "$PWD":/app -w /app php:7.4-cli php vendor/bin/phpunit --testdox tests
-```
-
 ## Installation without docker
 
 ### Requirement
@@ -42,8 +38,4 @@ $ php ./composer.phar install
 
 ```sh
 $ php index.php DayN PuzzleN
-```
-
-```sh
-$ php vendor/bin/phpunit --testdox tests
 ```

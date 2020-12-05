@@ -5,29 +5,32 @@ namespace App\Controller;
 use App\AbstractController;
 
 class Day01 extends AbstractController
-{   
+{
     /**
      * @see AbstractController
      */
     public function read(): array
     {
-        $file = fopen($this->getPathIn(), "r");
+        $array = [];
 
-        while (($line = fgets($file)) !== false) {
-            $array[] = (int)$line;
+        if ($file = fopen($this->getPathIn(), 'r')) {
+            while (($line = fgets($file)) !== false) {
+                $array[] = (int)$line;
+            }
+            fclose($file);
+
+            sort($array);
         }
-        fclose($file);
-        
-        sort($array);
 
         return $array;
     }
+    
         
     public function exec1(array $array = []): string
-    {       
-        $result = [];    
-        for($i = 0; $i < count($array); $i++) {
-            for($j = $i + 1; $j < count($array); $j++) {
+    {
+        $result = 0;
+        for ($i = 0; $i < count($array); $i++) {
+            for ($j = $i + 1; $j < count($array); $j++) {
                 if ($array[$i] + $array[$j] === 2020) {
                     $result = $array[$i] * $array[$j];
                 }
@@ -38,8 +41,8 @@ class Day01 extends AbstractController
     }
 
     public function exec2(array $array = []): string
-    {       
-        $result = [];
+    {
+        $result = 0;
         $i = 0;
         do {
             $one = $array[$i];
@@ -52,9 +55,9 @@ class Day01 extends AbstractController
                     if ($three === 2020) {
                         $result = $array[$i] * $array[$j] * $array[$k];
                     }
-                } while($k++ && $three < 2020 && $k < count($array) - 1);
-            } while($j++ && $two < 2020 && $j < count($array) - 1);
-        } while($i++ && $one < 2020 && $i < count($array) - 1);
+                } while ($k++ && $three < 2020 && $k < count($array) - 1);
+            } while ($j++ && $two < 2020 && $j < count($array) - 1);
+        } while ($i++ && $one < 2020 && $i < count($array) - 1);
 
         return (string)$result;
     }

@@ -5,38 +5,41 @@ namespace App\Controller;
 use App\AbstractController;
 
 class Day02 extends AbstractController
-{   
+{
+
     /**
      * @see AbstractController
      */
     public function read(): array
     {
-        $file = fopen($this->getPathIn(), "r");
+        $array = [];
 
-        while (($line = fgets($file)) !== false) {
-            [$policy, $letter, $pass] = explode(' ', $line);
+        if ($file = fopen($this->getPathIn(), 'r')) {
+            while (($line = fgets($file)) !== false) {
+                [$policy, $letter, $pass] = explode(' ', $line);
 
-            [$min, $max] = explode('-', $policy);
-            $letter = str_replace(':', '', $letter);
+                [$min, $max] = explode('-', $policy);
+                $letter = str_replace(':', '', $letter);
 
-            $array[] = [
-                'min' => (int)$min,
-                'max' => (int)$max,
-                'letter' => $letter,
-                'pass' => $pass
-            ];
+                $array[] = [
+                    'min' => (int)$min,
+                    'max' => (int)$max,
+                    'letter' => $letter,
+                    'pass' => $pass
+                ];
+            }
+            fclose($file);
         }
-        fclose($file);
 
         return $array;
     }
         
     public function exec1(array $array = []): string
-    {       
+    {
         $result = 0;
         foreach ($array as $case) {
             $appear = 0;
-            for($i = 0; $i < strlen($case['pass']); $i++) {
+            for ($i = 0; $i < strlen($case['pass']); $i++) {
                 if ($case['letter'] === $case['pass'][$i]) {
                     $appear++;
                 }
@@ -51,7 +54,7 @@ class Day02 extends AbstractController
     }
 
     public function exec2(array $array = []): string
-    {       
+    {
         $result = 0;
         foreach ($array as $case) {
             $validate = 0;

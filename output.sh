@@ -1,1 +1,0 @@
-docker run -it --rm --name aoc -v "$PWD":/app -w /app php:7.4-cli php index.php

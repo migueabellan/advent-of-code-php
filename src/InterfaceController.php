@@ -20,7 +20,7 @@ interface InterfaceController
      * Write output in
      *
      * @param string $string
-     * 
+     *
      * @return void
      */
     public function write(string $string): void;
@@ -29,14 +29,14 @@ interface InterfaceController
      * Algorithm for first puzzle
      *
      * @param array $array
-     * 
+     *
      * @return string
      */
     public function exec1(array $array = []): string;
 
     /**
      * Algorithm for second puzzle
-     * 
+     *
      * @param array $array
      *
      * @return string

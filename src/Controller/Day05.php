@@ -11,15 +11,16 @@ class Day05 extends AbstractController
      */
     public function read(): array
     {
-        $file = fopen($this->getPathIn(), "r");
+        $array = [];
 
-        while (($line = fgets($file)) !== false){
-            $binary = preg_replace(['/F|L/', '/B|R/'], [0, 1], $line);
+        if ($file = fopen($this->getPathIn(), 'r')) {
+            while (($line = fgets($file)) !== false) {
+                $binary = preg_replace(['/F|L/', '/B|R/'], [0, 1], $line);
 
-            $array[bindec($binary)] = bindec($binary);
+                $array[bindec($binary)] = bindec($binary);
+            }
+            fclose($file);
         }
-        
-        fclose($file);
 
         return $array;
     }
