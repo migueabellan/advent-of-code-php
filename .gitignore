@@ -1,2 +1,2 @@
-.phpcs-cache
+.*cache
 /vendor
