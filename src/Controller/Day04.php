@@ -18,6 +18,7 @@ class Day04 extends AbstractController
             while (($line = fgets($file)) !== false) {
                 if ($line === "\n") {
                     $i++;
+                    continue;
                 }
 
                 $fields = explode(' ', trim($line));
