@@ -35,6 +35,7 @@ class Day03 extends AbstractController
         $results = [];
         foreach ($cases as $c => $case) {
             $mod = 0;
+            $results[$c] = 0;
             foreach ($array as $k => $line) {
                 if ($k % $case['bottom'] === 0) {
                     if ($line[$mod] === '#') {
