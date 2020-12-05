@@ -6,11 +6,9 @@
     colors="true"
     bootstrap="tests/bootstrap.php"
 >
-    <!--
     <php>
         <ini name="error_reporting" value="-1" />
     </php>
-    -->
 
     <testsuites>
         <testsuite name="Test">
