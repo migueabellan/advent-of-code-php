@@ -15,11 +15,7 @@ class IndexController extends AbstractController
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
-                [$policy, $letter, $pass] = explode(' ', $line);
-
-                [$min, $max] = explode('-', $policy);
-                $letter = str_replace(':', '', $letter);
-
+                [$min, $max, $letter, $pass] = preg_split('/[- :]+/', $line);
                 $array[] = [
                     'min' => (int)$min,
                     'max' => (int)$max,
@@ -36,15 +32,15 @@ class IndexController extends AbstractController
     public function exec1(array $array = []): string
     {
         $result = 0;
-        foreach ($array as $case) {
-            $appear = 0;
-            for ($i = 0; $i < strlen($case['pass']); $i++) {
-                if ($case['letter'] === $case['pass'][$i]) {
-                    $appear++;
-                }
-            }
 
-            if ($appear >= $case['min'] && $appear <= $case['max']) {
+        foreach ($array as $case) {
+            $min = $case['min'];
+            $max = $case['max'];
+            $letter = $case['letter'];
+            $pass = $case['pass'];
+
+            $count = substr_count($pass, $letter);
+            if ($min <= $count && $count <= $max) {
                 $result++;
             }
         }
@@ -56,18 +52,12 @@ class IndexController extends AbstractController
     {
         $result = 0;
         foreach ($array as $case) {
-            $validate = 0;
             $min = $case['min'] - 1;
             $max = $case['max'] - 1;
+            $letter = $case['letter'];
+            $pass = $case['pass'];
 
-            if ($case['letter'] === $case['pass'][$min]) {
-                $validate++;
-            }
-            if ($case['letter'] === $case['pass'][$max]) {
-                $validate++;
-            }
-
-            if ($validate === 1) {
+            if (($letter === $pass[$min]) !== ($letter === $pass[$max])) {
                 $result++;
             }
         }
