@@ -6,7 +6,6 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-
     /**
      * @see AbstractController
      */
