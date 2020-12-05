@@ -19,7 +19,7 @@ $ docker run -it --rm -v "$PWD":/app composer install
 ```
 
 ```sh
-$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php DayN PuzzleN
+$ docker run -it --rm --name aoc -v "$PWD":/app -w /app php:7.4-cli php index.php DayN PuzzleN
 ```
 
 ## Installation without docker

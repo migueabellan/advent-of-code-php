@@ -13,7 +13,7 @@ class Day02Test extends TestCase
 
         $array = $runner->read();
         
-        $this->assertEquals(454, $runner->exec1($array));
+        $this->assertEquals(2, $runner->exec1($array));
     }
 
     public function testExec2(): void
@@ -22,6 +22,6 @@ class Day02Test extends TestCase
 
         $array = $runner->read();
         
-        $this->assertEquals(649, $runner->exec2($array));
+        $this->assertEquals(1, $runner->exec2($array));
     }
 }

@@ -1,3 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+
+    ignoreErrors:
+        - '#Constant BASE_PATH not found.#'

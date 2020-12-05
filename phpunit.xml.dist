@@ -4,6 +4,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     backupGlobals="false"
     colors="true"
+    bootstrap="tests/bootstrap.php"
 >
     <!--
     <php>

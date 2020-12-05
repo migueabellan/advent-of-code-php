@@ -28,7 +28,7 @@ abstract class AbstractController implements InterfaceController
     {
         $class = (new \ReflectionClass($this))->getShortName();
 
-        return '/app/public/'.$class.'_in.txt';
+        return BASE_PATH.'/public/'.$class.'_in.txt';
     }
 
     /**
