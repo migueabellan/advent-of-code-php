@@ -7,21 +7,30 @@ use PHPUnit\Framework\TestCase;
 
 class Day05Test extends TestCase
 {
+    /**
+     * @var object
+     */
+    private object $runner;
+
+    /**
+     * @var array
+     */
+    private array $array;
+
+    protected function setUp(): void
+    {
+        $this->runner = new Day05();
+
+        $this->array = $this->runner->read();
+    }
+
     public function testExec1(): void
     {
-        $runner = new Day05();
-
-        $array = $runner->read();
-        
-        $this->assertEquals(820, $runner->exec1($array));
+        $this->assertEquals(820, $this->runner->exec1($this->array));
     }
 
     public function testExec2(): void
     {
-        $runner = new Day05();
-
-        $array = $runner->read();
-        
-        $this->assertEquals(120, $runner->exec2($array));
+        $this->assertEquals(120, $this->runner->exec2($this->array));
     }
 }
