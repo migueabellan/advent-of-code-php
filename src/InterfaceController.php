@@ -28,14 +28,18 @@ interface InterfaceController
     /**
      * Algorithm for first puzzle
      *
-     * @return void
+     * @param array $array
+     * 
+     * @return string
      */
-    public function exec1(): void;
+    public function exec1(array $array = []): string;
 
     /**
      * Algorithm for second puzzle
+     * 
+     * @param array $array
      *
-     * @return void
+     * @return string
      */
-    public function exec2(): void;
+    public function exec2(array $array = []): string;
 }

@@ -35,7 +35,7 @@ class Day04 extends AbstractController
         return $array;
     }
 
-    public function exec1(): void
+    public function exec1(array $array = []): string
     {
         $array = $this->read();
 
@@ -55,13 +55,11 @@ class Day04 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
-    public function exec2(): void
+    public function exec2(array $array = []): string
     {
-        $array = $this->read();
-
         $result = 0;
         foreach ($array as $passport) {
             $i = 0;
@@ -73,7 +71,7 @@ class Day04 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
     public function valid(string $key, string $value): int

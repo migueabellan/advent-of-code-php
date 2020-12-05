@@ -24,19 +24,15 @@ class Day05 extends AbstractController
         return $array;
     }
 
-    public function exec1(): void
+    public function exec1(array $array = []): string
     {
-        $array = $this->read();
-
         $result = max($array);
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
-    public function exec2(): void
+    public function exec2(array $array = []): string
     {
-        $array = $this->read();
-
         $result = 0;
 
         for ($i = min($array); $i < max($array); $i++) {
@@ -46,6 +42,6 @@ class Day05 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 }

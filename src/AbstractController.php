@@ -2,8 +2,6 @@
 
 namespace App;
 
-use ReflectionClass;
-
 /**
  * Provides common features needed
  *
@@ -11,6 +9,16 @@ use ReflectionClass;
  */
 abstract class AbstractController implements InterfaceController
 {
+    /**
+     * @var int
+     */
+    protected $ini_time = 0;
+
+    public function __construct()
+    {
+        $this->ini_time = microtime(true) * 1000;
+    }
+    
     /**
      * Get path of the input file
      *
@@ -20,7 +28,7 @@ abstract class AbstractController implements InterfaceController
     {
         $class = (new \ReflectionClass($this))->getShortName();
 
-        return PUBLIC_PATH.$class.'_in.txt';
+        return '/app/public/'.$class.'_in.txt';
     }
 
     /**
@@ -50,6 +58,6 @@ abstract class AbstractController implements InterfaceController
     {        
         echo "\nResult: \e[0;30;42m " . $string . " \e[0m\n\n";
 
-        echo 'Time: ' . ((microtime(true) * 1000) - INI_TIME) . "\n";
+        echo 'Time: ' . ((microtime(true) * 1000) - $this->ini_time) . "\n";
     }
 }

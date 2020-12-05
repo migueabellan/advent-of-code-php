@@ -31,10 +31,8 @@ class Day02 extends AbstractController
         return $array;
     }
         
-    public function exec1(): void
+    public function exec1(array $array = []): string
     {       
-        $array = $this->read();
-
         $result = 0;
         foreach ($array as $case) {
             $appear = 0;
@@ -49,13 +47,11 @@ class Day02 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
-    public function exec2(): void
+    public function exec2(array $array = []): string
     {       
-        $array = $this->read();
-
         $result = 0;
         foreach ($array as $case) {
             $validate = 0;
@@ -74,6 +70,6 @@ class Day02 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 }

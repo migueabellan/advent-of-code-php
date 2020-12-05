@@ -6,10 +6,8 @@ use App\AbstractController;
 
 class Day03 extends AbstractController
 {
-    public function exec1(): void
+    public function exec1(array $array = []): string
     {
-        $array = $this->read();
-
         $result = 0;
         $right = 3;
         
@@ -21,13 +19,11 @@ class Day03 extends AbstractController
             $mod = ($mod = $mod + $right) % (strlen($line) - 1);
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
-    public function exec2(): void
+    public function exec2(array $array = []): string
     {
-        $array = $this->read();
-
         $cases = [
             ['right' => 1, 'bottom' => 1],
             ['right' => 3, 'bottom' => 1],
@@ -54,6 +50,6 @@ class Day03 extends AbstractController
             $result *= $v; 
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 }

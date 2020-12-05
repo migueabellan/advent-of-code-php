@@ -23,10 +23,8 @@ class Day01 extends AbstractController
         return $array;
     }
         
-    public function exec1(): void
+    public function exec1(array $array = []): string
     {       
-        $array = $this->read();
-
         $result = [];    
         for($i = 0; $i < count($array); $i++) {
             for($j = $i + 1; $j < count($array); $j++) {
@@ -36,13 +34,11 @@ class Day01 extends AbstractController
             }
         }
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 
-    public function exec2(): void
+    public function exec2(array $array = []): string
     {       
-        $array = $this->read();
-
         $result = [];
         $i = 0;
         do {
@@ -60,6 +56,6 @@ class Day01 extends AbstractController
             } while($j++ && $two < 2020 && $j < count($array) - 1);
         } while($i++ && $one < 2020 && $i < count($array) - 1);
 
-        $this->write((string)$result);
+        return (string)$result;
     }
 }

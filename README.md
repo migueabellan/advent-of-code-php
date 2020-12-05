@@ -15,11 +15,15 @@
 ```sh
 $ git clone git@github.com:migueabellan/advent-of-code-2020.git
 
-$ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php ./composer.phar install
+$ docker run -it --rm -v "$PWD":/app composer install
 ```
 
 ```sh
 $ docker run -it --rm --name aoc -v "$PWD":/usr/src -w /usr/src php:7.4-cli php index.php DayN PuzzleN
+```
+
+```sh
+$ docker run -it --rm --name aoc -v "$PWD":/app -w /app php:7.4-cli php vendor/bin/phpunit --testdox tests
 ```
 
 ## Installation without docker
@@ -38,4 +42,8 @@ $ php ./composer.phar install
 
 ```sh
 $ php index.php DayN PuzzleN
+```
+
+```sh
+$ php vendor/bin/phpunit --testdox tests
 ```
