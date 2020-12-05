@@ -1,3 +1,5 @@
+# Doc: https://github.com/php-actions/composer
+
 name: Test
 
 on: [push]
@@ -7,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: php-actions/composer@v4
-
-    - name: Composer install
-      run: composer install
+      uses: php-actions/composer@v4
+      with:
+        php_version: 7.4
+        composer_version: 2
 
     - name: Run cscheck
       run: composer cscheck
