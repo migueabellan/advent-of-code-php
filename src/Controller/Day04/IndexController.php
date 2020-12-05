@@ -6,6 +6,16 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    private const REGEX = [
+        'byr' => '/^(19[2-9][0-9])|(200[0-2])$/',                       // 1920 to 2002
+        'iyr' => '/^20(1\d|20)$/',                                      // 2010 to 2020
+        'eyr' => '/^20(2\d|30)$/',                                      // 2020 to 2030
+        'hgt' => '/^((59|6\d|7[0-6])in)|(((1[5-8]\d)|(19[0-3]))cm)$/',  // 59in to 79in or 150cm to 193cm
+        'hcl' => '/^#[0-9abcdef]{6}$/',
+        'ecl' => '/^amb|blu|brn|gry|grn|hzl|oth$/',
+        'pid' => '/^\d{9}$/'
+    ];
+
     /**
      * @see AbstractController
      */
@@ -41,18 +51,13 @@ class IndexController extends AbstractController
 
         $result = 0;
 
-        $fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', /*'cid'*/];
-
         foreach ($array as $passport) {
-            $i = 0;
-            foreach ($passport as $key => $value) {
-                if (in_array($key, $fields)) {
-                    $i++;
+            foreach (self::REGEX as $key => $regex) {
+                if (!isset($passport[$key])) {
+                    continue 2;
                 }
             }
-            if ($i === 7) {
-                $result++;
-            }
+            $result++;
         }
 
         return (string)$result;
@@ -61,72 +66,16 @@ class IndexController extends AbstractController
     public function exec2(array $array = []): string
     {
         $result = 0;
+
         foreach ($array as $passport) {
-            $i = 0;
-            foreach ($passport as $key => $value) {
-                $i += $this->valid($key, $value);
+            foreach (self::REGEX as $key => $regex) {
+                if (!isset($passport[$key]) || preg_match($regex, $passport[$key]) !== 1) {
+                    continue 2;
+                }
             }
-            if ($i === 7) {
-                $result++;
-            }
+            $result++;
         }
 
         return (string)$result;
-    }
-
-    public function valid(string $key, string $value): int
-    {
-        switch ($key) {
-            case 'byr':
-                if ($value >= 1920 && $value <= 2002) {
-                    return 1;
-                }
-                break;
-            case 'iyr':
-                if ($value >= 2010 && $value <= 2020) {
-                    return 1;
-                }
-                break;
-            case 'eyr':
-                if ($value >= 2020 && $value <= 2030) {
-                    return 1;
-                }
-                break;
-            case 'hgt':
-                if (strpos($value, 'cm') !== false) {
-                    $num = explode('cm', $value);
-                    if ($num[0] >= 150 && $num[0] <= 193) {
-                        return 1;
-                    }
-                }
-                if (strpos($value, 'in') !== false) {
-                    $num = explode('in', $value);
-                    if ($num[0] >= 59 && $num[0] <= 76) {
-                        return 1;
-                    }
-                }
-                break;
-            case 'hcl':
-                if (strpos($value, '#') !== false) {
-                    $hcl = explode('#', $value);
-                    if (preg_match('/^[0-9a-f]/', $hcl[1]) && strlen($hcl[1]) === 6) {
-                        return 1;
-                    }
-                }
-                break;
-            case 'ecl':
-                $ecl = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
-                if (in_array($value, $ecl)) {
-                    return 1;
-                }
-                break;
-            case 'pid':
-                if (preg_match('/^[0-9]/', $value) && strlen($value) === 9) {
-                    return 1;
-                }
-                break;
-        }
-
-        return 0;
     }
 }
