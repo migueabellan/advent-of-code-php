@@ -26,12 +26,13 @@ class IndexController extends AbstractController
         if ($file = fopen($this->getPathIn(), 'r')) {
             $i = 0;
             while (($line = fgets($file)) !== false) {
-                if ($line === "\n") {
+                $line = trim($line);
+                if (empty($line)) {
                     $i++;
                     continue;
                 }
 
-                $fields = explode(' ', trim($line));
+                $fields = explode(' ', $line);
                 foreach ($fields as $field) {
                     [$key, $value] = explode(':', $field);
                     if ($key !== '') {
