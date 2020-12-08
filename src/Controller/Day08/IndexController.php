@@ -163,7 +163,7 @@ class IndexController extends AbstractController
             return true;
         }
 
-            $array[$pointer]['is_exec'] = true;
+        $array[$pointer]['is_exec'] = true;
 
         if (isset($array[$pointer]['ins'])) {
             switch ($array[$pointer]['ins']) {
