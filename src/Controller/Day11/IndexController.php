@@ -10,6 +10,12 @@ class IndexController extends AbstractController
     private const OCCUPIED = '#';
     private const UNOCCUPIED = 'L';
 
+    private const COORDINATES = [
+        [-1, -1], [-1, +0], [-1, 1],
+        [+0, -1], /*******/ [+0, 1],
+        [+1, -1], [+1, +0], [+1, 1],
+    ];
+
     /**
      * @see AbstractController
      */
@@ -28,17 +34,26 @@ class IndexController extends AbstractController
         return $array;
     }
 
+    private function countOccupied(array $array): int
+    {
+        $result = 0;
+
+        for ($i = 0; $i < count($array); $i++) {
+            for ($j = 0; $j < count($array[$i]); $j++) {
+                if ($array[$i][$j] === self::OCCUPIED) {
+                    $result++;
+                }
+            }
+        }
+
+        return $result;
+    }
+
     private function occupiedAdyacentBy(array $array, int $row, int $col): int
     {
-        $coordinates = [
-            [-1, -1], [-1, +0], [-1, 1],
-            [+0, -1], /*******/ [+0, 1],
-            [+1, -1], [+1, +0], [+1, 1],
-        ];
-
         $count = 0;
 
-        foreach ($coordinates as $seat) {
+        foreach (self::COORDINATES as $seat) {
             $i = $row + $seat[0];
             $j = $col + $seat[1];
 
@@ -80,29 +95,14 @@ class IndexController extends AbstractController
             $array = $aux;
         } while ($changes > 0);
 
-        $result = 0;
-        for ($i = 0; $i < count($array); $i++) {
-            for ($j = 0; $j < count($array[$i]); $j++) {
-                if ($array[$i][$j] === self::OCCUPIED) {
-                    $result++;
-                }
-            }
-        }
-
-        return (string)$result;
+        return (string)$this->countOccupied($array);
     }
 
     private function occupiedDiagonalBy(array $array, int $row, int $col): int
     {
-        $coordinates = [
-            [-1, -1], [-1, +0], [-1, 1],
-            [+0, -1], /*******/ [+0, 1],
-            [+1, -1], [+1, +0], [+1, 1],
-        ];
-
         $count = 0;
 
-        foreach ($coordinates as $seat) {
+        foreach (self::COORDINATES as $seat) {
             $i = $row + $seat[0];
             $j = $col + $seat[1];
 
@@ -153,15 +153,6 @@ class IndexController extends AbstractController
             $array = $aux;
         } while ($changes > 0);
 
-        $result = 0;
-        for ($i = 0; $i < count($array); $i++) {
-            for ($j = 0; $j < count($array[$i]); $j++) {
-                if ($array[$i][$j] === self::OCCUPIED) {
-                    $result++;
-                }
-            }
-        }
-
-        return (string)$result;
+        return (string)$this->countOccupied($array);
     }
 }
