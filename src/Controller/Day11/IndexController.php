@@ -28,7 +28,7 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    private function occupiedSeatsBy(array $array, int $row, int $col): int
+    private function occupiedAdyacentBy(array $array, int $row, int $col): int
     {
         $coordinates = [
             [-1, -1], [-1, +0], [-1, 1],
@@ -62,13 +62,13 @@ class IndexController extends AbstractController
                         case self::FLOOR:
                             break;
                         case self::UNOCCUPIED:
-                            if ($this->occupiedSeatsBy($array, $i, $j) === 0) {
+                            if ($this->occupiedAdyacentBy($array, $i, $j) === 0) {
                                 $aux[$i][$j] =  self::OCCUPIED;
                                 $changes++;
                             }
                             break;
                         case self::OCCUPIED:
-                            if ($this->occupiedSeatsBy($array, $i, $j) >= 4) {
+                            if ($this->occupiedAdyacentBy($array, $i, $j) >= 4) {
                                 $aux[$i][$j] =  self::UNOCCUPIED;
                                 $changes++;
                             }
@@ -92,11 +92,75 @@ class IndexController extends AbstractController
         return (string)$result;
     }
 
+    private function occupiedDiagonalBy(array $array, int $row, int $col): int
+    {
+        $coordinates = [
+            [-1, -1], [-1, +0], [-1, 1],
+            [+0, -1], /*******/ [+0, 1],
+            [+1, -1], [+1, +0], [+1, 1],
+        ];
+
+        $count = 0;
+
+        foreach ($coordinates as $seat) {
+            $i = $row + $seat[0];
+            $j = $col + $seat[1];
+
+            while (isset($array[$i][$j])) {
+                if ($array[$i][$j] === self::OCCUPIED) {
+                    $count++;
+                    break;
+                }
+                if ($array[$i][$j] === self::UNOCCUPIED) {
+                    break;
+                }
+
+                $i += $seat[0];
+                $j += $seat[1];
+            }
+        }
+
+        return $count;
+    }
+
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $aux = $array;
 
-        //
+        do {
+            $changes = 0;
+            for ($i = 0; $i < count($array); $i++) {
+                for ($j = 0; $j < count($array[$i]); $j++) {
+                    switch ($array[$i][$j]) {
+                        case self::FLOOR:
+                            break;
+                        case self::UNOCCUPIED:
+                            if ($this->occupiedDiagonalBy($array, $i, $j) === 0) {
+                                $aux[$i][$j] =  self::OCCUPIED;
+                                $changes++;
+                            }
+                            break;
+                        case self::OCCUPIED:
+                            if ($this->occupiedDiagonalBy($array, $i, $j) >= 5) {
+                                $aux[$i][$j] =  self::UNOCCUPIED;
+                                $changes++;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            $array = $aux;
+        } while ($changes > 0);
+
+        $result = 0;
+        for ($i = 0; $i < count($array); $i++) {
+            for ($j = 0; $j < count($array[$i]); $j++) {
+                if ($array[$i][$j] === self::OCCUPIED) {
+                    $result++;
+                }
+            }
+        }
 
         return (string)$result;
     }
