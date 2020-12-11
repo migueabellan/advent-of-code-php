@@ -30,17 +30,22 @@ class IndexController extends AbstractController
 
     private function occupiedSeatsBy(array $array, int $row, int $col): int
     {
+        $coordinates = [
+            [-1, -1], [-1, +0], [-1, 1],
+            [+0, -1], /*******/ [+0, 1],
+            [+1, -1], [+1, +0], [+1, 1],
+        ];
+
         $count = 0;
 
-        $count += ($array[$row - 1][$col - 1] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row - 1][$col    ] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row - 1][$col + 1] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row    ][$col - 1] ?? self::FLOOR) === self::OCCUPIED;
+        foreach ($coordinates as $seat) {
+            $i = $row + $seat[0];
+            $j = $col + $seat[1];
 
-        $count += ($array[$row    ][$col + 1] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row + 1][$col - 1] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row + 1][$col    ] ?? self::FLOOR) === self::OCCUPIED;
-        $count += ($array[$row + 1][$col + 1] ?? self::FLOOR) === self::OCCUPIED;
+            if (isset($array[$i][$j]) && $array[$i][$j] === self::OCCUPIED) {
+                $count++;
+            }
+        }
 
         return $count;
     }
