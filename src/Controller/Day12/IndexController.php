@@ -44,7 +44,7 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    private function moveBoard(object &$board, string $dir, int $dis): void
+    private function moveBoard(stdClass &$board, string $dir, int $dis): void
     {
         switch ($dir) {
             case self::NORTH:
@@ -62,7 +62,7 @@ class IndexController extends AbstractController
         }
     }
 
-    private function turnBoard(object &$board, string $to, int $deg): void
+    private function turnBoard(stdClass &$board, string $to, int $deg): void
     {
         $current = self::DIRS[$board->dir];
 
@@ -117,7 +117,7 @@ class IndexController extends AbstractController
 
 
     
-    private function moveWaipoint(object &$waypoint, string $dir, int $dis): void
+    private function moveWaipoint(stdClass &$waypoint, string $dir, int $dis): void
     {
         switch ($dir) {
             case self::NORTH:
@@ -135,7 +135,7 @@ class IndexController extends AbstractController
         }
     }
 
-    private function turnWaipoint(object &$waypoint, string $to, int $deg): void
+    private function turnWaipoint(stdClass &$waypoint, string $to, int $deg): void
     {
         switch ($to) {
             case self::LEFT:
@@ -170,7 +170,7 @@ class IndexController extends AbstractController
         }
     }
 
-    private function moveBoardToWaypoint(object &$board, object &$waypoint, int $times): void
+    private function moveBoardToWaypoint(stdClass &$board, stdClass &$waypoint, int $times): void
     {
         $board->dx += ($times * $waypoint->x);
         $board->dy += ($times * $waypoint->y);
