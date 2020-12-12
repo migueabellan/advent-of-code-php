@@ -3,6 +3,7 @@
 namespace App\Controller\Day12;
 
 use App\Controller\AbstractController;
+use stdClass;
 
 class IndexController extends AbstractController
 {
@@ -43,25 +44,27 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    private function move(int $x, int $y, string $dir, int $dis): array
+    private function move(object &$board, string $dir, int $dis): void
     {
         switch ($dir) {
             case self::NORTH:
-                return [$x, $y + $dis];
+                $board->dy += $dis;
+                break;
             case self::SOUTH:
-                return [$x, $y - $dis];
+                $board->dy -= $dis;
+                break;
             case self::EAST:
-                return [$x + $dis, $y];
+                $board->dx += $dis;
+                break;
             case self::WEST:
-                return [$x - $dis, $y];
+                $board->dx -= $dis;
+                break;
         }
-
-        return [];
     }
 
-    private function turn(string $dir, string $to, int $deg): string
+    private function turn(object &$board, string $to, int $deg): void
     {
-        $current = self::DIRS[$dir];
+        $current = self::DIRS[$board->dir];
 
         switch ($to) {
             case self::LEFT:
@@ -75,16 +78,17 @@ class IndexController extends AbstractController
 
         $current %= 360;
 
-        return (string)array_search($current, self::DIRS);
+        $board->dir = (string)array_search($current, self::DIRS);
     }
 
     public function exec1(array $array = []): string
     {
         $result = 0;
 
-        $dir = self::EAST;
-        $x = 0;
-        $y = 0;
+        $board = new stdClass();
+        $board->dir = self::EAST;
+        $board->dx = 0;
+        $board->dy = 0;
 
         foreach ($array as $action) {
             switch ($action['ins']) {
@@ -92,21 +96,21 @@ class IndexController extends AbstractController
                 case self::SOUTH:
                 case self::EAST:
                 case self::WEST:
-                    [$x, $y] = $this->move($x, $y, $action['ins'], $action['val']);
+                    $this->move($board, $action['ins'], $action['val']);
                     break;
 
                 case self::FORDWARD:
-                    [$x, $y] = $this->move($x, $y, $dir, $action['val']);
+                    $this->move($board, $board->dir, $action['val']);
                     break;
 
                 case self::LEFT:
                 case self::RIGHT:
-                    $dir = $this->turn($dir, $action['ins'], $action['val']);
+                    $this->turn($board, $action['ins'], $action['val']);
                     break;
             }
         }
 
-        $result = abs($x) + abs($y);
+        $result = abs($board->dx) + abs($board->dy);
 
         return (string)$result;
     }
