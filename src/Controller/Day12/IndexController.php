@@ -44,17 +44,17 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    private function move(object &$board, string $dir, int $dis): void
+    private function moveBoard(object &$board, string $dir, int $dis): void
     {
         switch ($dir) {
             case self::NORTH:
                 $board->dy += $dis;
                 break;
-            case self::SOUTH:
-                $board->dy -= $dis;
-                break;
             case self::EAST:
                 $board->dx += $dis;
+                break;
+            case self::SOUTH:
+                $board->dy -= $dis;
                 break;
             case self::WEST:
                 $board->dx -= $dis;
@@ -62,7 +62,7 @@ class IndexController extends AbstractController
         }
     }
 
-    private function turn(object &$board, string $to, int $deg): void
+    private function turnBoard(object &$board, string $to, int $deg): void
     {
         $current = self::DIRS[$board->dir];
 
@@ -93,19 +93,19 @@ class IndexController extends AbstractController
         foreach ($array as $action) {
             switch ($action['ins']) {
                 case self::NORTH:
-                case self::SOUTH:
                 case self::EAST:
+                case self::SOUTH:
                 case self::WEST:
-                    $this->move($board, $action['ins'], $action['val']);
+                    $this->moveBoard($board, $action['ins'], $action['val']);
                     break;
 
                 case self::FORDWARD:
-                    $this->move($board, $board->dir, $action['val']);
+                    $this->moveBoard($board, $board->dir, $action['val']);
                     break;
 
                 case self::LEFT:
                 case self::RIGHT:
-                    $this->turn($board, $action['ins'], $action['val']);
+                    $this->turnBoard($board, $action['ins'], $action['val']);
                     break;
             }
         }
@@ -115,9 +115,102 @@ class IndexController extends AbstractController
         return (string)$result;
     }
 
+
+    
+    private function moveWaipoint(object &$waypoint, string $dir, int $dis): void
+    {
+        switch ($dir) {
+            case self::NORTH:
+                $waypoint->y += $dis;
+                break;
+            case self::EAST:
+                $waypoint->x += $dis;
+                break;
+            case self::SOUTH:
+                $waypoint->y -= $dis;
+                break;
+            case self::WEST:
+                $waypoint->x -= $dis;
+                break;
+        }
+    }
+
+    private function turnWaipoint(object &$waypoint, string $to, int $deg): void
+    {
+        switch ($to) {
+            case self::LEFT:
+                $deg *= -1;
+                $deg += 360;
+                break;
+            case self::RIGHT:
+                break;
+        }
+
+        $deg %= 360;
+
+        switch ((string)array_search($deg, self::DIRS)) {
+            case self::NORTH:
+                // $waypoint->x = $x;
+                // $waypoint->y = $y;
+                break;
+            case self::EAST:
+                $aux = $waypoint->x;
+                $waypoint->x = $waypoint->y;
+                $waypoint->y = $aux * -1;
+                break;
+            case self::SOUTH:
+                $waypoint->x *= -1;
+                $waypoint->y *= -1;
+                break;
+            case self::WEST:
+                $aux = $waypoint->x;
+                $waypoint->x = $waypoint->y * -1;
+                $waypoint->y = $aux;
+                break;
+        }
+    }
+
+    private function moveBoardToWaypoint(object &$board, object &$waypoint, int $times): void
+    {
+        $board->dx += ($times * $waypoint->x);
+        $board->dy += ($times * $waypoint->y);
+    }
+
     public function exec2(array $array = []): string
     {
         $result = 0;
+
+        $board = new stdClass();
+        $board->dir = self::EAST;
+        $board->dx = 0;
+        $board->dy = 0;
+
+        $waypoint = new stdClass();
+        $waypoint->x = 10;
+        $waypoint->y = 1;
+
+        foreach ($array as $action) {
+            switch ($action['ins']) {
+                case self::NORTH:
+                case self::EAST:
+                case self::SOUTH:
+                case self::WEST:
+                    $this->moveWaipoint($waypoint, $action['ins'], $action['val']);
+                    break;
+
+                case self::FORDWARD:
+                    $this->moveBoardToWaypoint($board, $waypoint, $action['val']);
+                    break;
+
+                case self::LEFT:
+                case self::RIGHT:
+                    $this->turnWaipoint($waypoint, $action['ins'], $action['val']);
+                    $this->turnBoard($board, $action['ins'], $action['val']);
+                    break;
+            }
+        }
+
+        $result = abs($board->dx) + abs($board->dy);
 
         return (string)$result;
     }
