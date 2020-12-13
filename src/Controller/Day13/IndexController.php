@@ -15,9 +15,9 @@ class IndexController extends AbstractController
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($timestamp = fgets($file)) !== false) {
-
-                $ids = array_filter(explode(',', fgets($file)),
-                    function($el) {
+                $ids = array_filter(
+                    explode(',', fgets($file)),
+                    function ($el) {
                         return is_numeric($el);
                     }
                 );
