@@ -15,47 +15,29 @@ class IndexController extends AbstractController
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($timestamp = fgets($file)) !== false) {
-                $ids = array_filter(
-                    explode(',', fgets($file)),
-                    function ($el) {
-                        return is_numeric($el);
-                    }
-                );
-                
-                $busses = [];
-                foreach ($ids as $id) {
-                    $mod = (int)$timestamp % (int)$id;
-                    $remain = (int)$id - $mod;
-                    $busses[] = [
-                        'id' => (int)$id,
-                        'remain' => $remain
-                    ];
-                }
-                
-                $array[] = [
-                    'timestamp' => (int)$timestamp,
-                    'busses' => $busses
-                ];
+                $array['timestamp'] = (int)$timestamp;
+                $array['busses'] = explode(',', (string)fgets($file));
             }
             fclose($file);
         }
-        
+
         return $array;
     }
 
     public function exec1(array $array = []): string
     {
-        $result = $array[0]['timestamp'];
+        $result = $array['timestamp'];
 
-        $lastId = 0;
-        foreach ($array[0]['busses'] as $bus) {
-            if ($bus['remain'] < $result) {
-                $result = $bus['remain'];
-                $lastId = $bus['id'];
+        foreach ($array['busses'] as $bus) {
+            if (is_numeric($bus)) {
+                $diff = $bus - ($array['timestamp'] % $bus);
+                if ($diff < $result) {
+                    $result = $diff * $bus;
+                }
             }
         }
-        
-        return (string)($result * $lastId);
+
+        return (string)$result;
     }
 
     public function exec2(array $array = []): string
