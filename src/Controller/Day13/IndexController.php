@@ -42,9 +42,22 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $multiplier = 1;
 
+        $i = 0;
+        foreach ($array['busses'] as $k => $bus) {
+            if (is_numeric($bus)) {
+                while (true) {
+                    if (($i + $k) % $bus === 0) {
+                        $multiplier *= $bus;
+                        break;
+                    }
+                    $i += $multiplier;
+                }
+            }
+        }
 
+        $result = $i;
 
         return (string)$result;
     }
