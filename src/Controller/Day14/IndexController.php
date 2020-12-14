@@ -72,14 +72,16 @@ class IndexController extends AbstractController
             foreach (str_split($mask) as $k => $v) {
                 switch ($v) {
                     case '0':
-                        $memory += ($umemory[$k] * pow(2, $k));
+                        $memory += (int)$umemory[$k] * pow(2, $k);
+                        break;
                     case '1':
                         $umemory[$k] = 1;
-                        $memory += ($v * pow(2, $k));
+                        $memory += (int)$v * pow(2, $k);
                         break;
                     case 'X':
                         $umemory[$k] = 'X';
                         $pows[] = $k;
+                        break;
                 }
             }
 
@@ -87,7 +89,7 @@ class IndexController extends AbstractController
                 $aux = $memory;
                 $bin = sprintf('%0'.count($pows).'s', decbin($i));
                 foreach ($pows as $k => $pow) {
-                    $aux += $bin[$k] * pow(2, $pow);
+                    $aux += (int)$bin[$k] * pow(2, $pow);
                 }
                 $result[$aux] = $instruction['decimal'];
             }
