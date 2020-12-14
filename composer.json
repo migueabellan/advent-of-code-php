@@ -27,5 +27,11 @@
         "csfix": "phpcbf",
         "phpstan": "phpstan analyse src/ -c phpstan.neon --level=7 --no-progress -vvv --memory-limit=1024M",
         "parallel": "vendor/bin/parallel-lint . --colors --exclude vendor"
-    }
+    },
+    "authors": [
+        {
+          "name": "Miguel Ángel Abellán",
+          "homepage": "https://github.com/migueabellan"
+        }
+    ]
 }
