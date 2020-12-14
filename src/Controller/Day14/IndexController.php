@@ -27,6 +27,7 @@ class IndexController extends AbstractController
                     $array[] = [
                         'mask' => $mask,
                         'memory' => $matches['mem'],
+                        'decimal' => $matches['decimal'],
                         'binary' => sprintf('%036s', decbin($matches['decimal'])),
                     ];
                 }
@@ -44,8 +45,11 @@ class IndexController extends AbstractController
         foreach ($array as $instruction) {
             $umask = $instruction['binary'];
             foreach (str_split($instruction['mask']) as $k => $v) {
-                if ($v !== 'X') {
-                    $umask[$k] = $v;
+                switch ($v) {
+                    case '0':
+                    case '1':
+                        $umask[$k] = $v;
+                        break;
                 }
             }
 
@@ -57,10 +61,38 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $result = [];
 
-        //
+        foreach ($array as $instruction) {
+            $umemory = strrev(sprintf('%036s', decbin($instruction['memory'])));
+            $mask = strrev($instruction['mask']);
+            
+            $memory = 0;
+            $pows = [];
+            foreach (str_split($mask) as $k => $v) {
+                switch ($v) {
+                    case '0':
+                        $memory += ($umemory[$k] * pow(2, $k));
+                    case '1':
+                        $umemory[$k] = 1;
+                        $memory += ($v * pow(2, $k));
+                        break;
+                    case 'X':
+                        $umemory[$k] = 'X';
+                        $pows[] = $k;
+                }
+            }
 
-        return (string)$result;
+            for ($i = 0; $i < pow(2, count($pows)); $i++) {
+                $aux = $memory;
+                $bin = sprintf('%0'.count($pows).'s', decbin($i));
+                foreach ($pows as $k => $pow) {
+                    $aux += $bin[$k] * pow(2, $pow);
+                }
+                $result[$aux] = $instruction['decimal'];
+            }
+        }
+
+        return (string)array_sum($result);
     }
 }

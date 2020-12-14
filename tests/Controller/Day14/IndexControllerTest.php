@@ -31,6 +31,6 @@ class IndexControllerTest extends TestCase
 
     public function testExec2(): void
     {
-        $this->assertEquals(0, $this->runner->exec2($this->array));
+        $this->assertEquals(4200656704538, $this->runner->exec2($this->array));
     }
 }
