@@ -75,11 +75,9 @@ class IndexController extends AbstractController
                         $memory += (int)$umemory[$k] * pow(2, $k);
                         break;
                     case '1':
-                        $umemory[$k] = 1;
                         $memory += (int)$v * pow(2, $k);
                         break;
                     case 'X':
-                        $umemory[$k] = 'X';
                         $pows[] = $k;
                         break;
                 }
