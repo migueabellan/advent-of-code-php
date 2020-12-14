@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class IndexControllerTest extends TestCase
 {
     /**
-     * @var object
+     * @var IndexController
      */
     private object $runner;
 
