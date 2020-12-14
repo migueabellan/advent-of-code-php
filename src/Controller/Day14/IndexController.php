@@ -24,18 +24,10 @@ class IndexController extends AbstractController
                 if (strstr($line, 'mem')) {
                     preg_match("~^mem\[(?'mem'.*)] = (?'decimal'.*)$~", $line, $matches);
 
-                    $umask = sprintf('%036s', decbin($matches['decimal']));
-                    foreach (str_split($mask) as $k => $v) {
-                        if ($v !== 'X') {
-                            $umask[$k] = $v;
-                        }
-                    }
-
                     $array[] = [
-                        // 'mask' => $mask,
-                        'mem' => $matches['mem'],
-                        'decimal' => $matches['decimal'],
-                        'umask' => bindec($umask)
+                        'mask' => $mask,
+                        'memory' => $matches['mem'],
+                        'binary' => sprintf('%036s', decbin($matches['decimal'])),
                     ];
                 }
             }
@@ -50,7 +42,14 @@ class IndexController extends AbstractController
         $result = [];
 
         foreach ($array as $instruction) {
-            $result[$instruction['mem']] = $instruction['umask'];
+            $umask = $instruction['binary'];
+            foreach (str_split($instruction['mask']) as $k => $v) {
+                if ($v !== 'X') {
+                    $umask[$k] = $v;
+                }
+            }
+
+            $result[$instruction['memory']] = bindec($umask);
         }
 
         return (string)array_sum($result);
