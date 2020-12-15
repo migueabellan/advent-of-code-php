@@ -23,30 +23,36 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    public function exec1(array $array = []): string
+    private function game(array $array, int $turns): int
     {
-        $array[count($array)] = 0;
+        $said = array_flip($array);
+        $result = end($array);
 
-        for ($i = count($array); $i < 2020; $i++) {
-            $aux = 0;
-            for ($j = $i - 2; $j >= 0; $j--) {
-                if ($array[$i - 1] == $array[$j]) {
-                    $aux = $i - $j - 1;
-                    break;
-                }
+        $array[count($array)] = 0;
+                
+        for ($i = count($array); $i <= $turns; $i++) {
+            if (array_key_exists($result, $said)) {
+                $aux = $i - 2 - $said[$result];
+                $said[$result] = $i - 2;
+                $result = $aux;
+            } else {
+                $said[$result] = $i - 2;
+                $result = 0;
             }
-            $array[$i] = $aux;
         }
 
-        return (string)end($array);
+        return $result;
+    }
+
+    public function exec1(array $array = []): string
+    {
+        return (string)$this->game($array, 2020);
     }
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        ini_set('memory_limit', '-1');
 
-        //
-
-        return (string)$result;
+        return (string)$this->game($array, 30000000);
     }
 }
