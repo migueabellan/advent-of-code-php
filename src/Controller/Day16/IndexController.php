@@ -6,13 +6,18 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    private const YOUR_TICKET = 'your ticket';
+    private const NEARBY_TICKET = 'nearby tickets';
+
+    private const VALUES = 'values';
+
     /**
      * @see AbstractController
      */
     public function read(): array
     {
         $array = [];
-        $array['values'] = [];
+        $array[self::VALUES] = [];
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
@@ -20,16 +25,16 @@ class IndexController extends AbstractController
                 if ($line !== '') {
                     preg_match("~^(?'first'.*):(?'second'.*)$~", $line, $matches);
                     switch ($matches['first']) {
-                        case 'your ticket':
+                        case self::YOUR_TICKET:
                             $ticket = fgets($file);
-                            $array['your tickets'] = array_map('intval', explode(',', (string)$ticket));
+                            $array[self::YOUR_TICKET] = array_map('intval', explode(',', (string)$ticket));
                             break;
-                        case 'nearby tickets':
+                        case self::NEARBY_TICKET:
                             $tickets = [];
                             while (($ticket = fgets($file)) !== false) {
                                 $tickets[] = array_map('intval', explode(',', $ticket));
                             }
-                            $array['nearby tickets'] = $tickets;
+                            $array[self::NEARBY_TICKET] = $tickets;
                             break;
                         default:
                             preg_match(
@@ -37,8 +42,8 @@ class IndexController extends AbstractController
                                 trim($matches['second']),
                                 $ors
                             );
-                            $array['values'] = array_merge(
-                                $array['values'],
+                            $array[self::VALUES] = array_merge(
+                                $array[self::VALUES],
                                 range((int)$ors['min1'], (int)$ors['max1']),
                                 range((int)$ors['min2'], (int)$ors['max2']),
                             );
@@ -55,9 +60,9 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
-        foreach ($array['nearby tickets'] as $ticket) {
+        foreach ($array[self::NEARBY_TICKET] as $ticket) {
             foreach ($ticket as $number) {
-                if (!in_array($number, $array['values'])) {
+                if (!in_array($number, $array[self::VALUES])) {
                     $result += $number;
                 }
             }
