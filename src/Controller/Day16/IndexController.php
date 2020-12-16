@@ -10,7 +10,7 @@ class IndexController extends AbstractController
     private const NEARBY_TICKET = 'nearby tickets';
 
     private const VALUES = 'values';
-    private const POSITIONS = 'positions';
+    private const RULES = 'rules';
 
     /**
      * @see AbstractController
@@ -48,7 +48,8 @@ class IndexController extends AbstractController
                                 range((int)$ors['min1'], (int)$ors['max1']),
                                 range((int)$ors['min2'], (int)$ors['max2']),
                             );
-                            $array[self::POSITIONS][$matches['first']] = array_merge(
+
+                            $array[self::RULES][$matches['first']] = array_merge(
                                 range((int)$ors['min1'], (int)$ors['max1']),
                                 range((int)$ors['min2'], (int)$ors['max2']),
                             );
@@ -80,6 +81,7 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
+
         $valids = [];
         foreach ($array[self::NEARBY_TICKET] as $ticket) {
             $is_valid = true;
@@ -94,9 +96,38 @@ class IndexController extends AbstractController
         }
 
 
+        $rules = $array[self::RULES];
+        $columns = range(0, count($rules) - 1);
+        $solution = [];
 
-        // print_r($valids);
-        // die;
+        while (count($columns)) {
+            foreach ($columns as $column) {
+                $availables = [];
+                foreach ($rules as $name => $rule) {
+                    foreach ($valids as $ticket) {
+                        if (!in_array($ticket[$column], $rule)) {
+                            continue 2;
+                        }
+                    }
+                    $availables[] = $name;
+                }
+
+                if (count($availables) === 1) {
+                    $solution[$column] = $availables[0];
+
+                    unset($columns[$column]);
+                    unset($rules[$availables[0]]);
+                }
+            }
+        }
+
+
+        $result = 1;
+        foreach ($solution as $k => $rule) {
+            if (substr($rule, 0, 9) === 'departure') {
+                $result *= $array[self::YOUR_TICKET][$k];
+            }
+        }
 
         return (string)$result;
     }
