@@ -10,6 +10,7 @@ class IndexController extends AbstractController
     private const NEARBY_TICKET = 'nearby tickets';
 
     private const VALUES = 'values';
+    private const POSITIONS = 'positions';
 
     /**
      * @see AbstractController
@@ -47,6 +48,10 @@ class IndexController extends AbstractController
                                 range((int)$ors['min1'], (int)$ors['max1']),
                                 range((int)$ors['min2'], (int)$ors['max2']),
                             );
+                            $array[self::POSITIONS][$matches['first']] = array_merge(
+                                range((int)$ors['min1'], (int)$ors['max1']),
+                                range((int)$ors['min2'], (int)$ors['max2']),
+                            );
                     }
                 }
             }
@@ -75,7 +80,23 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
-        //
+        $valids = [];
+        foreach ($array[self::NEARBY_TICKET] as $ticket) {
+            $is_valid = true;
+            foreach ($ticket as $number) {
+                if (!in_array($number, $array[self::VALUES])) {
+                    $is_valid = false;
+                }
+            }
+            if ($is_valid) {
+                $valids[] = $ticket;
+            }
+        }
+
+
+
+        // print_r($valids);
+        // die;
 
         return (string)$result;
     }
