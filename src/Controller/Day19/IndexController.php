@@ -38,7 +38,7 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    private function setRegex(array $array, int $rule_id): string
+    private function setRegex1(array $array, int $rule_id): string
     {
         $current = current($array[$rule_id]);
         if ($current === 'a' || $current === 'b') {
@@ -48,7 +48,7 @@ class IndexController extends AbstractController
         $expr = '(';
         foreach ($array[$rule_id] as $v) {
             if ($v !== '|') {
-                $expr .= $this->setRegex($array, $v);
+                $expr .= $this->setRegex1($array, $v);
             } else {
                 $expr .= '|';
             }
@@ -62,7 +62,7 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
-        $regex = $this->setRegex($array, 0);
+        $regex = $this->setRegex1($array, 0);
 
         foreach ($this->messages as $message) {
             if (preg_match('/^'.$regex.'$/', $message)) {
@@ -74,9 +74,50 @@ class IndexController extends AbstractController
     }
     
 
+    private function setRegex2(array $array, int $rule_id): string
+    {
+        $current = current($array[$rule_id]);
+        if ($current === 'a' || $current === 'b') {
+            return $current;
+        }
+
+        if ($rule_id === 8) {
+            return '(' . $this->setRegex2($array, 42) . ')+';
+        }
+
+        if ($rule_id === 11) {
+            return '(' . $this->setRegex2($array, 42) .'){x}(' . $this->setRegex2($array, 31) . '){x}';
+        }
+
+        $expr = '(';
+        foreach ($array[$rule_id] as $v) {
+            if ($v !== '|') {
+                $expr .= $this->setRegex2($array, $v);
+            } else {
+                $expr .= '|';
+            }
+        }
+        $expr .= ')';
+
+        return $expr;
+    }
+
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $regex = $this->setRegex2($array, 0);
+
+        $valids = [];
+
+        $result = -1;
+
+        for ($x = 1; count($valids) !== $result; $x++) {
+            $result = count($valids);
+            foreach ($this->messages as $k => $message) {
+                if (preg_match('/^'.str_replace('x', (string)$x, $regex).'$/', $message)) {
+                    $valids[] = $k;
+                }
+            }
+        }
 
         return (string)$result;
     }
