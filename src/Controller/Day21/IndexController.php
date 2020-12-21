@@ -34,10 +34,10 @@ class IndexController extends AbstractController
 
     protected function getAllergens(array $foods): array
     {
+        $allergens = [];
+
         $possibleIngredients = [];
 
-        $allergens = [];
-        
         $foundIngredients = [];
 
         foreach ($foods as $food) {
@@ -46,12 +46,13 @@ class IndexController extends AbstractController
                 $newPossibleIngredients = [];
                 foreach ($food->ingredients as $ingredient) {
                     $newPossibleIngredients[] = $ingredient;
-                }
 
-                if (is_null($currentPossibleIngredients)) {
-                    $possibleIngredients[$allergen] = $newPossibleIngredients;
-                } else {
-                    $possibleIngredients[$allergen] = array_intersect($currentPossibleIngredients, $newPossibleIngredients);
+                    if (is_null($currentPossibleIngredients)) {
+                        $possibleIngredients[$allergen] = $newPossibleIngredients;
+                    } else {
+                        $possibleIngredients[$allergen] =
+                            array_intersect($currentPossibleIngredients, $newPossibleIngredients);
+                    }
                 }
 
                 if (count($possibleIngredients[$allergen]) === 1) {
@@ -110,8 +111,10 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $allergens = $this->getAllergens($array);
 
-        return (string)$result;
+        asort($allergens);
+
+        return implode(',', array_keys($allergens));
     }
 }
