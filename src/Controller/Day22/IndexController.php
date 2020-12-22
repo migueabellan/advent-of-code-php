@@ -33,13 +33,17 @@ class IndexController extends AbstractController
         return $array;
     }
 
+    private function getWinner(array $p1, array $p2): array
+    {
+        return count($p1) > count($p2) ? $p1 : $p2;
+    }
+
     private function calculateScore(array $array): int
     {
         $score = 0;
 
-        $i = 1;
-        while ($v = array_pop($array)) {
-            $score += ($i++ * $v);
+        foreach (array_reverse($array) as $i => $v) {
+            $score += ($i + 1) * $v;
         }
 
         return $score;
@@ -47,8 +51,6 @@ class IndexController extends AbstractController
 
     public function exec1(array $array = []): string
     {
-        $result = 0;
-
         $p1 = $array[1];
         $p2 = $array[2];
 
@@ -64,11 +66,7 @@ class IndexController extends AbstractController
             }
         }
 
-        if (!empty($p1)) {
-            $result = $this->calculateScore($p1);
-        } else {
-            $result = $this->calculateScore($p2);
-        }
+        $result = $this->calculateScore($this->getWinner($p1, $p2));
 
         return (string)$result;
     }
@@ -76,8 +74,10 @@ class IndexController extends AbstractController
     public function exec2(array $array = []): string
     {
         $result = 0;
+        
+        $p1 = $array[1];
+        $p2 = $array[2];
 
-        //
 
         return (string)$result;
     }
