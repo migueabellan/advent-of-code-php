@@ -26,7 +26,6 @@ class IndexController extends AbstractController
 
     public function exec1(array $array = []): string
     {
-
         $cups = array_map('intval', $array);
 
         $max = max($cups);
@@ -58,7 +57,52 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        ini_set('memory_limit', '-1');
+
+        $cups = array_map('intval', $array);
+
+        $nextCups_key = [];
+        $current_key = 0;
+
+        $max = max($cups);
+        $min = min($cups);
+
+        for (; $max < 1000000;) {
+            $cups[] = ++$max;
+        }
+        for ($i = 0; $i < $max - 1; $i++) {
+            $nextCups_key[$i] = $i + 1;
+        }
+        $nextCups_key[$max - 1] = 0;
+        $cup_key = array_flip($cups);
+
+        for ($i = 0; $i < 10000000; $i++) {
+            $pickups_key = [];
+            $pickups = [];
+            $aux = $current_key;
+            for ($j = 0; $j < 3; $j++) {
+                $aux = $nextCups_key[$aux];
+                $pickups_key[] = $aux;
+                $pickups[] = $cups[$aux];
+            }
+            
+            $destination = $cups[$current_key];
+            do {
+                if (--$destination < $min) {
+                    $destination = $max;
+                }
+            } while (in_array($destination, $pickups));
+
+            $destination_key = $cup_key[$destination];
+            $nextCups_key[$current_key] = $nextCups_key[$pickups_key[2]];
+            $nextCups_key[$pickups_key[2]] = $nextCups_key[$destination_key];
+            $nextCups_key[$destination_key] = $pickups_key[0];
+            $current_key = $nextCups_key[$current_key];
+        }
+
+        $one = $cup_key[1];
+        
+        $result = $cups[$nextCups_key[$one]] * $cups[$nextCups_key[$nextCups_key[$one]]];
 
         return (string)$result;
     }
