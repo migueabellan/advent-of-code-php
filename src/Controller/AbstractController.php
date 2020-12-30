@@ -40,16 +40,7 @@ abstract class AbstractController implements InterfaceController
      */
     public function read(): array
     {
-        $array = [];
-
-        if ($file = fopen($this->getPathIn(), 'r')) {
-            while (($line = fgets($file)) !== false) {
-                $array[] = $line;
-            }
-            fclose($file);
-        }
-        
-        return $array;
+        return (array)file($this->getPathIn(), FILE_IGNORE_NEW_LINES);
     }
 
     /**
