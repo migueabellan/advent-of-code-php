@@ -1,10 +1,16 @@
 {
     "name": "migueabellan/advent-of-code-2020",
-    "description": "Advent of Code 2020",
+    "description": "My solutions to Advent of Code (PHP)",
     "type": "project",
     "license": "MIT",
+    "authors": [
+        {
+          "name": "Miguel Ángel Abellán",
+          "homepage": "https://github.com/migueabellan"
+        }
+    ],
     "require": {
-        "php": "^7.2"
+        "php": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -29,11 +35,5 @@
         "phpstan": "phpstan analyse ./src ./tests/ -c phpstan.neon --level=7 --no-progress -vvv --memory-limit=1024M",
         "parallel": "vendor/bin/parallel-lint ./src ./tests/ --colors --exclude vendor",
         "phploc": "vendor/bin/phploc ./src ./tests/ --exclude vendor"
-    },
-    "authors": [
-        {
-          "name": "Miguel Ángel Abellán",
-          "homepage": "https://github.com/migueabellan"
-        }
-    ]
+    }
 }
