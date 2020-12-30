@@ -16,7 +16,8 @@
     "require": {
         "php": "^8.0",
         "ext-ctype": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "symfony/console": "^5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

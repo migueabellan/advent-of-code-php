@@ -24,7 +24,7 @@ $ docker-compose exec php composer install
 ```
 
 ```sh
-$ docker-compose exec php index.php DayN PuzzleN 
+$ docker-compose exec php bin/console puzzle:exec -y [YEAR] -d [DAY]] -p [PUZZLE] 
 ```
 
 ## Installation without docker
@@ -42,5 +42,5 @@ $ composer install
 ```
 
 ```sh
-$ php index.php DayN PuzzleN
+$ php bin/console puzzle:exec -y [YEAR] -d [DAY]] -p [PUZZLE]
 ```
