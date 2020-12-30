@@ -1,5 +1,5 @@
 {
-    "name": "migueabellan/advent-of-code-2020",
+    "name": "migueabellan/advent-of-code-php",
     "description": "My solutions to Advent of Code (PHP)",
     "keywords": ["advent-of-code", "php"],
     "type": "project",
