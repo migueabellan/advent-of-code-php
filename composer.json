@@ -1,16 +1,22 @@
 {
     "name": "migueabellan/advent-of-code-2020",
     "description": "My solutions to Advent of Code (PHP)",
+    "keywords": ["advent-of-code", "php"],
     "type": "project",
     "license": "MIT",
+    "version": "20.12.0",
     "authors": [
         {
           "name": "Miguel Ángel Abellán",
-          "homepage": "https://github.com/migueabellan"
+          "email": "info@migueabellan.es",
+          "homepage": "https://migueabellan.github.io",
+          "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "ext-ctype": "*",
+        "ext-iconv": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
