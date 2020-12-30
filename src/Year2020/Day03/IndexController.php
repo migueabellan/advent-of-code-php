@@ -6,6 +6,20 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    public function read(): array
+    {
+        $array = [];
+
+        if ($file = fopen($this->getPathIn(), 'r')) {
+            while (($line = fgets($file)) !== false) {
+                $array[] = $line;
+            }
+            fclose($file);
+        }
+        
+        return $array;
+    }
+    
     public function exec1(array $array = []): string
     {
         $result = 0;

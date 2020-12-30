@@ -6,47 +6,32 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @see AbstractController
-     */
-    public function read(): array
+    private const UP = '(';
+    private const DOWN = ')';
+
+    public function exec1(array $input = []): string
     {
-        $array = [];
+        $directions = current($input);
 
-        if ($file = fopen($this->getPathIn(), 'r')) {
-            while (($line = fgets($file)) !== false) {
-                $array[] = $line;
-            }
-            fclose($file);
-        }
-
-        return $array;
-    }
-    
-        
-    public function exec1(array $array = []): string
-    {
-        $directions = current($array);
-
-        $up = substr_count($directions, '(');
-        $down = substr_count($directions, ')');
+        $up = substr_count($directions, self::UP);
+        $down = substr_count($directions, self::DOWN);
         
         return (string)($up - $down);
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $input = []): string
     {
         $result = 0;
 
-        $directions = str_split(current($array));
+        $directions = str_split(current($input));
 
         $floor = 0;
         foreach ($directions as $key => $character) {
             switch ($character) {
-                case '(':
+                case self::UP:
                     $floor++;
                     break;
-                case ')':
+                case self::DOWN:
                     $floor--;
                     break;
             }
