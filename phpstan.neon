@@ -1,3 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+
+    excludes_analyse:
+        - %currentWorkingDirectory%/src/Command/PuzzleCommand.php

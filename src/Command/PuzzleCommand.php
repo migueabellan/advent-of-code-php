@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,7 +12,7 @@ class PuzzleCommand extends Command
 {
     protected static $defaultName = 'puzzle:exec';
 
-    protected function configure()
+    protected function configure(): void
     {
         $currentYear = (new \DateTime())->format("Y");
         $currentDay = (new \DateTime())->format("d");
@@ -49,11 +50,10 @@ class PuzzleCommand extends Command
         $puzzle = $input->getOption('puzzle');
 
         try {
-            // $class = sprintf('\\App\\Controller\\Year%s\\Day%s\\IndexController',$year, $day);
-            $class = sprintf('\\App\\Controller\\Day%s\\IndexController', $day);
+            $class = sprintf('\\App\\Year%s\\Day%s\\IndexController', $year, $day);
             $runner = new $class();
         } catch (\Error $e) {
-            $output->writeln(sprintf('<error>No class found for day %d of year %d</error>', $day, $year));
+            $output->writeln(sprintf('<error>No class found for day %s of year %s</error>', $day, $year));
             return Command::FAILURE;
         }
 
@@ -68,6 +68,9 @@ class PuzzleCommand extends Command
                 $result = $runner->exec2($array);
                 $runner->write($result);
                 break;
+            default:
+                $output->writeln(sprintf('<error>No method found for puzzle %s</error>', $puzzle));
+                return Command::FAILURE;
         }
 
         return Command::SUCCESS;
