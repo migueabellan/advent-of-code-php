@@ -12,7 +12,7 @@ class IndexController extends AbstractController
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
-                $array[] = str_split(trim($line));
+                $array = str_split(trim($line));
             }
             fclose($file);
         }
@@ -22,30 +22,21 @@ class IndexController extends AbstractController
 
     public function exec1(array $array = []): string
     {
-        $result = 0;
+        $grid = new Grid();
+        $grid->addPresent(0, 0);
 
-        foreach ($array as $movement) {
-            $result++;
-            $grid = new Grid();
-            $grid->setFill(0, 0, true);
-            foreach ($movement as $location) {
-                $grid->move($location);
+        foreach ($array as $location) {
+            $grid->move($location);
 
-                if (!$grid->getFill($grid->getX(), $grid->getY())) {
-                    $grid->setFill($grid->getX(), $grid->getY(), true);
-                    $result++;
-                }
-            }
+            $grid->addPresent($grid->getX(), $grid->getY());
         }
         
-        return (string)$result;
+        return (string)$grid->getPresents();
     }
 
     public function exec2(array $array = []): string
     {
         $result = 0;
-
-        
         
         return (string)$result;
     }

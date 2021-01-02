@@ -13,10 +13,14 @@ class Grid
     private int $x;
     private int $y;
 
+    private int $presents;
+
     public function __construct(int $x = 0, int $y = 0)
     {
         $this->x = $x;
         $this->y = $y;
+
+        $this->presents = 0;
     }
 
     public function getX(): int
@@ -27,6 +31,11 @@ class Grid
     public function getY(): int
     {
         return $this->y;
+    }
+
+    public function getPresents(): int
+    {
+        return $this->presents;
     }
 
     public function move(string $direction, int $step = 1): void
@@ -47,13 +56,11 @@ class Grid
         }
     }
 
-    public function setFill(int $x, int $y, mixed $fill): void
+    public function addPresent(int $x, int $y): void
     {
-        $this->grid[$x][$y] = $fill;
-    }
-
-    public function getFill(int $x, int $y): mixed
-    {
-        return $this->grid[$x][$y] ?? null;
+        if (!isset($this->grid[$x][$y])) {
+            $this->grid[$x][$y] = true;
+            $this->presents++;
+        }
     }
 }
