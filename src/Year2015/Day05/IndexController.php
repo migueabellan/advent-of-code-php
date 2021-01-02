@@ -21,19 +21,14 @@ class IndexController extends AbstractController
         return preg_match('/ab|cd|pq|xy/', $word) === 0;
     }
 
-    private function isValid(string $word): bool
-    {
-        return $this->isValidVowels($word) &&
-            $this->isValidTwice($word) &&
-            $this->isValidNotString($word);
-    }
-
     public function exec1(array $array = []): string
     {
         $result = 0;
         
         foreach ($array as $word) {
-            if ($this->isValid($word)) {
+            if ($this->isValidVowels($word) &&
+                $this->isValidTwice($word) &&
+                $this->isValidNotString($word)) {
                 $result++;
             }
         }
