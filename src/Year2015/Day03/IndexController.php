@@ -3,6 +3,7 @@
 namespace App\Year2015\Day03;
 
 use App\Controller\AbstractController;
+use App\Utils\Grid;
 
 class IndexController extends AbstractController
 {
@@ -30,28 +31,27 @@ class IndexController extends AbstractController
         $result = 0;
 
         foreach ($array as $movement) {
-            $x = $y = 0;
-            $grid = [];
-            $grid[$x][$y] = true;
             $result++;
+            $grid = new Grid();
+            $grid->setFill(0, 0, true);
             foreach ($movement as $location) {
                 switch ($location) {
                     case self::UP:
-                        $y++;
+                        $grid->move(Grid::NORTH);
                         break;
                     case self::LEFT:
-                        $x++;
+                        $grid->move(Grid::EAST);
                         break;
                     case self::DOWN:
-                        $y--;
+                        $grid->move(Grid::SOUTH);
                         break;
                     case self::RIGHT:
-                        $x--;
+                        $grid->move(Grid::WEST);
                         break;
                 }
-                if (!isset($grid[$x][$y])) {
+                if (!$grid->getFill($grid->getX(), $grid->getY())) {
+                    $grid->setFill($grid->getX(), $grid->getY(), true);
                     $result++;
-                    $grid[$x][$y] = true;
                 }
             }
         }
