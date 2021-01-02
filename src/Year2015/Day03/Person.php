@@ -2,14 +2,13 @@
 
 namespace App\Year2015\Day03;
 
-class Grid
+class Person
 {
     public const NORTH = '^';
     public const EAST = '>';
     public const SOUTH = 'v';
     public const WEST = '<';
 
-    private array $grid;
     private int $x;
     private int $y;
 
@@ -17,11 +16,6 @@ class Grid
     {
         $this->x = $x;
         $this->y = $y;
-    }
-
-    public function getGrid(): array
-    {
-        return $this->grid;
     }
 
     public function getX(): int
@@ -50,30 +44,5 @@ class Grid
                 $this->x -= $step;
                 break;
         }
-    }
-
-    public function getFill(int $x, int $y): mixed
-    {
-        return $this->grid[$x][$y] ?? null;
-    }
-
-    public function addPresent(): void
-    {
-        if (!isset($this->grid[$this->x][$this->y])) {
-            $this->grid[$this->x][$this->y] = 0;
-        }
-
-        $this->grid[$this->x][$this->y]++;
-    }
-
-    public function getPresents(): int
-    {
-        $presents = 0;
-
-        foreach ($this->grid as $v) {
-            $presents += count($v);
-        }
-
-        return $presents;
     }
 }
