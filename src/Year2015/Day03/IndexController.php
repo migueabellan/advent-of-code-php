@@ -22,38 +22,37 @@ class IndexController extends AbstractController
 
     public function exec1(array $array = []): string
     {
-        $house = new House();
-        $house->addPresent(0, 0);
+        $grid = new Grid();
+        $grid->addPresent(0, 0);
 
         $santa = new Person();
 
         foreach ($array as $location) {
             $santa->move($location);
-
-            $house->addPresent($santa->getX(), $santa->getY());
+            $grid->addPresent($santa->getX(), $santa->getY());
         }
         
-        return (string)$house->getPresents();
+        return (string)$grid->getPresents();
     }
 
     public function exec2(array $array = []): string
     {
-        $house = new House();
-        $house->addPresent(0, 0);
+        $grid = new Grid();
+        $grid->addPresent(0, 0);
 
         $santa = new Person();
         $elf = new Person();
 
         foreach ($array as $k => $location) {
-            if ($k % 2 == 0) {
+            if ($k % 2 === 0) {
                 $santa->move($location);
-                $house->addPresent($santa->getX(), $santa->getY());
+                $grid->addPresent($santa->getX(), $santa->getY());
             } else {
                 $elf->move($location);
-                $house->addPresent($elf->getX(), $elf->getY());
+                $grid->addPresent($elf->getX(), $elf->getY());
             }
         }
 
-        return (string)$house->getPresents();
+        return (string)$grid->getPresents();
     }
 }

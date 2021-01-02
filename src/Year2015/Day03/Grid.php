@@ -2,7 +2,7 @@
 
 namespace App\Year2015\Day03;
 
-class House
+class Grid
 {
     private array $grid;
 
