@@ -6,22 +6,18 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+    private const UP = '^';
+    private const LEFT = '>';
+    private const DOWN = 'v';
+    private const RIGHT = '<';
+
     public function read(): array
     {
         $array = [];
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
-                preg_match("~^(?'l'.*)x(?'w'.*)x(?'h'.*)$~", $line, $matches);
-                $l = (int)$matches['l'];
-                $w = (int)$matches['w'];
-                $h = (int)$matches['h'];
-
-                $array[] = [
-                    'l' => $l,
-                    'w' => $w,
-                    'h' => $h
-                ];
+                $array[] = str_split(trim($line));
             }
             fclose($file);
         }
@@ -33,18 +29,31 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
-        foreach ($array as $present) {
-            $areas = [
-                $present['l'] * $present['w'],
-                $present['w'] * $present['h'],
-                $present['h'] * $present['l']
-            ];
-
-            $surface = array_reduce($areas, function ($surface, $area) {
-                return $surface += (2 * $area);
-            }, 0);
-
-            $result += ($surface + min($areas));
+        foreach ($array as $movement) {
+            $x = $y = 0;
+            $grid = [];
+            $grid[$x][$y] = true;
+            $result++;
+            foreach ($movement as $location) {
+                switch ($location) {
+                    case self::UP:
+                        $y++;
+                        break;
+                    case self::LEFT:
+                        $x++;
+                        break;
+                    case self::DOWN:
+                        $y--;
+                        break;
+                    case self::RIGHT:
+                        $x--;
+                        break;
+                }
+                if (!isset($grid[$x][$y])) {
+                    $result++;
+                    $grid[$x][$y] = true;
+                }
+            }
         }
         
         return (string)$result;
@@ -54,19 +63,7 @@ class IndexController extends AbstractController
     {
         $result = 0;
 
-        foreach ($array as $present) {
-            $perimeter = [
-                2 * $present['l'],
-                2 * $present['w'],
-                2 * $present['h']
-            ];
-            sort($perimeter);
-            $perimeter = $perimeter[0] + $perimeter[1];
-
-            $volume = $present['l'] * $present['w'] * $present['h'];
-
-            $result += ($perimeter + $volume);
-        }
+        
         
         return (string)$result;
     }
