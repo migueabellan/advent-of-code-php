@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Utils;
+namespace App\Year2015\Day03;
 
 class Grid
 {
-    public const NORTH = 'NORTH';
-    public const EAST = 'EAST';
-    public const SOUTH = 'SOUTH';
-    public const WEST = 'WEST';
+    public const NORTH = '^';
+    public const EAST = '>';
+    public const SOUTH = 'v';
+    public const WEST = '<';
 
     private array $grid;
     private int $x;
