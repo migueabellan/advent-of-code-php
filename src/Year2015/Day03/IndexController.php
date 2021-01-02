@@ -23,12 +23,11 @@ class IndexController extends AbstractController
     public function exec1(array $array = []): string
     {
         $grid = new Grid();
-        $grid->addPresent(0, 0);
+        $grid->addPresent();
 
         foreach ($array as $location) {
             $grid->move($location);
-
-            $grid->addPresent($grid->getX(), $grid->getY());
+            $grid->addPresent();
         }
         
         return (string)$grid->getPresents();
@@ -36,8 +35,6 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
-        
-        return (string)$result;
+        return (string)0;
     }
 }
