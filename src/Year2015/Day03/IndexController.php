@@ -38,7 +38,22 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
+        $house = new House();
+        $house->addPresent(0, 0);
 
-        return (string)0;
+        $santa = new Person();
+        $elf = new Person();
+
+        foreach ($array as $k => $location) {
+            if ($k % 2 == 0) {
+                $santa->move($location);
+                $house->addPresent($santa->getX(), $santa->getY());
+            } else {
+                $elf->move($location);
+                $house->addPresent($elf->getX(), $elf->getY());
+            }
+        }
+
+        return (string)$house->getPresents();
     }
 }
