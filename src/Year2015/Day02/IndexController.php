@@ -6,19 +6,6 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-    private function getSurface(int $l, int $w, int $h): int
-    {
-        return (2 * $l * $w) + ( 2 * $w * $h) + (2 * $h * $l);
-    }
-
-    private function getExtra(int $l, int $w, int $h): int
-    {
-        $areas = [$l * $w, $w * $h, $h * $l];
-
-
-        return (2 * $l * $w) + ( 2 * $w * $h) + (2 * $h * $l);
-    }
-
     public function read(): array
     {
         $array = [];
