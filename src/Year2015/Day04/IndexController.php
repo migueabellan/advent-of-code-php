@@ -10,9 +10,9 @@ class IndexController extends AbstractController
     {
         $secret = current($input);
 
-        $i = 0;
+        $i = 2;
         do {
-            $i++;
+            $i += 8;
         } while (!str_starts_with(md5($secret.$i), '00000'));
 
         return (string)$i;
@@ -22,9 +22,9 @@ class IndexController extends AbstractController
     {
         $secret = current($input);
 
-        $i = 0;
+        $i = 2;
         do {
-            $i++;
+            $i += 8;
         } while (!str_starts_with(md5($secret.$i), '000000'));
 
         return (string)$i;
