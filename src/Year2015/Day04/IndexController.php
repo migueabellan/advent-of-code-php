@@ -12,7 +12,7 @@ class IndexController extends AbstractController
 
         $i = 0;
         do {
-            $i += 1;
+            $i++;
         } while (!str_starts_with(md5($secret.$i), '00000'));
 
         return (string)$i;
@@ -24,7 +24,7 @@ class IndexController extends AbstractController
 
         $i = 2;
         do {
-            // $i += 1;
+            // $i++;
             $i += 8; // to reduce exec time
         } while (!str_starts_with(md5($secret.$i), '000000'));
 
