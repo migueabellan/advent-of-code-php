@@ -6,17 +6,17 @@ use App\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-    private function isValidVowels(string $word): bool
+    private function hasThreeVowels(string $word): bool
     {
         return preg_match_all('/[aeiou]/', $word) >= 3;
     }
 
-    private function isValidTwice(string $word): bool
+    private function hasDuplicatedLetter(string $word): bool
     {
-        return preg_match('/([a-z])\1+/', $word) !== 0;
+        return preg_match('/(.)\1/', $word) >= 1;
     }
 
-    private function isValidNotString(string $word): bool
+    private function hasNoBadStrings(string $word): bool
     {
         return preg_match('/ab|cd|pq|xy/', $word) === 0;
     }
@@ -26,9 +26,9 @@ class IndexController extends AbstractController
         $result = 0;
         
         foreach ($array as $word) {
-            if ($this->isValidVowels($word) &&
-                $this->isValidTwice($word) &&
-                $this->isValidNotString($word)) {
+            if ($this->hasThreeVowels($word) &&
+                $this->hasDuplicatedLetter($word) &&
+                $this->hasNoBadStrings($word)) {
                 $result++;
             }
         }
@@ -36,11 +36,26 @@ class IndexController extends AbstractController
         return (string)$result;
     }
 
-    public function exec2(array $input = []): string
+    private function hasDoublePairLetters(string $word): bool
+    {
+        return preg_match('/(..).*\1/', $word) >= 1;
+    }
+
+    private function hasLettersBetween(string $word): bool
+    {
+        return preg_match('/(.).\1/', $word) >= 1;
+    }
+
+    public function exec2(array $array = []): string
     {
         $result = 0;
-
-        //
+        
+        foreach ($array as $word) {
+            if ($this->hasDoublePairLetters($word) &&
+                $this->hasLettersBetween($word)) {
+                $result++;
+            }
+        }
 
         return (string)$result;
     }
