@@ -106,10 +106,11 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $search = 'a';
 
-        //
+        $clone = array_merge([], $array);
+        $array['b']['result'] = $this->recursive($clone, $search);
 
-        return (string)$result;
+        return (string)$this->recursive($array, $search);
     }
 }
