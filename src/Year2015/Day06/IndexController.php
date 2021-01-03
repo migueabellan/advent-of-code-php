@@ -44,10 +44,16 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
-        
-        //
+        $grid = new Grid();
 
-        return (string)$result;
+        foreach ($array as $instruction) {
+            for ($x = $instruction['ini'][0]; $x <= $instruction['end'][0]; $x++) {
+                for ($y = $instruction['ini'][1]; $y <= $instruction['end'][1]; $y++) {
+                    $grid->setBrightness($x, $y, $instruction['inst']);
+                }
+            }
+        }
+
+        return (string)$grid->getNumBrightness();
     }
 }

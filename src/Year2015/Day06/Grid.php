@@ -19,7 +19,7 @@ class Grid
 
         for ($i = 0; $i < $this->width; $i++) {
             for ($j = 0; $j < $this->height; $j++) {
-                $this->grid[$i][$j] = false;
+                $this->grid[$i][$j] = 0;
             }
         }
     }
@@ -28,10 +28,10 @@ class Grid
     {
         switch ($option) {
             case self::ON:
-                $this->grid[$x][$y] = true;
+                $this->grid[$x][$y] = 1;
                 break;
             case self::OFF:
-                $this->grid[$x][$y] = false;
+                $this->grid[$x][$y] = 0;
                 break;
             case self::TOOGLE:
                 $this->grid[$x][$y] = !$this->grid[$x][$y];
@@ -50,5 +50,35 @@ class Grid
         }
 
         return $lights;
+    }
+
+    public function setBrightness(int $x, int $y, string $option): void
+    {
+        switch ($option) {
+            case self::ON:
+                $this->grid[$x][$y]++;
+                break;
+            case self::OFF:
+                if ($this->grid[$x][$y] > 0) {
+                    $this->grid[$x][$y]--;
+                }
+                break;
+            case self::TOOGLE:
+                $this->grid[$x][$y] += 2;
+                break;
+        }
+    }
+
+    public function getNumBrightness(): int
+    {
+        $brightness = 0;
+
+        for ($i = 0; $i < $this->width; $i++) {
+            for ($j = 0; $j < $this->height; $j++) {
+                $brightness += $this->grid[$i][$j];
+            }
+        }
+
+        return $brightness;
     }
 }
