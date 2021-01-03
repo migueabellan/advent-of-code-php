@@ -28,7 +28,7 @@ class IndexController extends AbstractController
     }
 
     public function exec1(array $array = []): string
-    {       
+    {
         $grid = new Grid();
 
         foreach ($array as $instruction) {

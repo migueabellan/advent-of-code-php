@@ -27,13 +27,13 @@ class Grid
     public function setLight(int $x, int $y, string $option): void
     {
         switch ($option) {
-            case self::ON;
+            case self::ON:
                 $this->grid[$x][$y] = true;
                 break;
-            case self::OFF;
+            case self::OFF:
                 $this->grid[$x][$y] = false;
                 break;
-            case self::TOOGLE;
+            case self::TOOGLE:
                 $this->grid[$x][$y] = !$this->grid[$x][$y];
                 break;
         }
