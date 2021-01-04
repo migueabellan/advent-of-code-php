@@ -42,10 +42,17 @@ class IndexController extends AbstractController
 
     public function exec2(array $array = []): string
     {
-        $result = 0;
+        $permutations = ArrayUtil::permutations(array_keys($array));
 
-        //
+        $distances = [];
+        foreach ($permutations as $permutation) {
+            $distance = 0;
+            for ($i = 0; $i < count($permutation) - 1; $i++) {
+                $distance += $array[$permutation[$i]][$permutation[$i+1]];
+            }
+            $distances[] = $distance;
+        }
 
-        return (string)$result;
+        return (string)max($distances);
     }
 }
