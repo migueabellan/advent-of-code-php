@@ -5,9 +5,7 @@ namespace App\Utils;
 class ArrayUtil
 {
     /**
-     * Permutation array
-     *
-     * $array [0, 1, 2] -> [0,1,2], [0,2,1], [1,0,2], [1, 2, 0] ...
+     * Return an array with all permutations
      */
     public static function permutations(array $array, array $perms = []): array
     {
