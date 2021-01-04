@@ -2,10 +2,10 @@
 
 namespace App\Year2020\Day12;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 use stdClass;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private const NORTH = 'N';
     private const SOUTH = 'S';

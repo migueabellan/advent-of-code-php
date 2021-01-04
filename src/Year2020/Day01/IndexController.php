@@ -2,9 +2,9 @@
 
 namespace App\Year2020\Day01;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private const YEAR = 2020;
 

@@ -2,9 +2,9 @@
 
 namespace App\Year2020\Day04;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private const REGEX = [
         'byr' => '/^(19[2-9][0-9])|(200[0-2])$/',                       // 1920 to 2002

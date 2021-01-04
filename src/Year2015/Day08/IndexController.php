@@ -2,9 +2,9 @@
 
 namespace App\Year2015\Day08;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private function strReplace(string $str): string
     {

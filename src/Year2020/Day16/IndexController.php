@@ -2,9 +2,9 @@
 
 namespace App\Year2020\Day16;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private const YOUR_TICKET = 'your ticket';
     private const NEARBY_TICKET = 'nearby tickets';

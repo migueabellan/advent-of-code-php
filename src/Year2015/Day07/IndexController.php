@@ -2,9 +2,9 @@
 
 namespace App\Year2015\Day07;
 
-use App\Controller\AbstractController;
+use App\Puzzle\AbstractPuzzle;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractPuzzle
 {
     private const AND = 'AND';
     private const OR = 'OR';

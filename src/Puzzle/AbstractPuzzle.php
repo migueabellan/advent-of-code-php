@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Controller;
+namespace App\Puzzle;
 
 /**
  * Provides common features needed
  *
  * @author Miguel Ángel Abellán <info@migueabellan.es>
  */
-abstract class AbstractController implements InterfaceController
+abstract class AbstractPuzzle implements InterfacePuzzle
 {
-    /**
-     * @var float
-     */
-    protected float $ini_time = 0;
+    private float $ini_time = 0;
 
     public function __construct()
     {
@@ -21,10 +18,8 @@ abstract class AbstractController implements InterfaceController
     
     /**
      * Get path of the input file
-     *
-     * @return string
      */
-    protected function getPathIn(): string
+    public function getPathIn(): string
     {
         $path = (string)(new \ReflectionClass($this))->getFileName();
 
@@ -35,8 +30,6 @@ abstract class AbstractController implements InterfaceController
 
     /**
      * Map input file to array in default mode
-     *
-     * @see InterfaceController
      */
     public function read(): array
     {
@@ -45,8 +38,6 @@ abstract class AbstractController implements InterfaceController
 
     /**
      * Write output in a console
-     *
-     * @see InterfaceController
      */
     public function write(string $string): void
     {
