@@ -2,13 +2,13 @@
 
 namespace Tests\Year2015\Day04;
 
-use App\Year2015\Day04\IndexController;
+use App\Year2015\Day04\Puzzle;
 use PHPUnit\Framework\TestCase;
 
-class IndexControllerTest extends TestCase
+class PuzzleTest extends TestCase
 {
     /**
-     * @var IndexController
+     * @var Puzzle
      */
     private object $runner;
 
@@ -19,7 +19,7 @@ class IndexControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->runner = new IndexController();
+        $this->runner = new Puzzle();
 
         $this->array = $this->runner->read();
     }

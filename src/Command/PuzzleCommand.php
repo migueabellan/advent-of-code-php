@@ -49,7 +49,7 @@ class PuzzleCommand extends Command
         $puzzle = $input->getOption('puzzle');
 
         try {
-            $class = sprintf('\\App\\Year%s\\Day%s\\IndexController', $year, $day);
+            $class = sprintf('\\App\\Year%s\\Day%s\\Puzzle', $year, $day);
             $runner = new $class();
         } catch (\Error $e) {
             $output->writeln(sprintf('<error>No class found for day %s of year %s</error>', $day, $year));
