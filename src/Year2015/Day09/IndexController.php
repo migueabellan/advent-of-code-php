@@ -24,7 +24,7 @@ class IndexController extends AbstractController
         return $array;
     }
 
-    public function exec1(array $array = []): string
+    private function getDistances(array $array): array
     {
         $permutations = ArrayUtil::permutations(array_keys($array));
 
@@ -36,22 +36,20 @@ class IndexController extends AbstractController
             }
             $distances[] = $distance;
         }
+        
+        return $distances;
+    }
+
+    public function exec1(array $array = []): string
+    {
+        $distances = $this->getDistances($array);
 
         return (string)min($distances);
     }
 
     public function exec2(array $array = []): string
     {
-        $permutations = ArrayUtil::permutations(array_keys($array));
-
-        $distances = [];
-        foreach ($permutations as $permutation) {
-            $distance = 0;
-            for ($i = 0; $i < count($permutation) - 1; $i++) {
-                $distance += $array[$permutation[$i]][$permutation[$i+1]];
-            }
-            $distances[] = $distance;
-        }
+        $distances = $this->getDistances($array);
 
         return (string)max($distances);
     }
