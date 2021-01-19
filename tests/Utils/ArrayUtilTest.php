@@ -31,4 +31,31 @@ class ArrayUtilTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @dataProvider combinations
+     */
+    public function testCombinations(array $array, array $expected): void
+    {
+        $combinations = ArrayUtil::combinations($array);
+
+        $this->assertEquals($combinations, $expected);
+    }
+
+    public function combinations(): \Iterator
+    {
+        yield [
+            [0, 1, 2],
+            [
+                [],
+                [0],
+                [1],
+                [1, 0],
+                [2],
+                [2, 0],
+                [2, 1],
+                [2, 1, 0]
+            ]
+        ];
+    }
 }
