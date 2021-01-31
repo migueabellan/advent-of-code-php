@@ -3,31 +3,17 @@
 namespace App\Year2015\Day20;
 
 use App\Puzzle\AbstractPuzzle;
+use App\Utils\MathUtil;
 
 class Puzzle extends AbstractPuzzle
 {
-    private function getDivisors(int $number): array
-    {
-        $divisors = [];
-        $sqrt = sqrt($number);
-
-        for ($i = 1; $i <= $sqrt; $i++) {
-            if ($number % $i === 0) {
-                $divisors[] = $i;
-                $divisors[] = $number / $i;
-            }
-        }
-
-        return array_unique($divisors);
-    }
-
     public function exec1(array $input = []): string
     {
         $presents = 0;
         $house = 1;
 
         while (true) {
-            $presents = array_sum($this->getDivisors($house)) * 10;
+            $presents = array_sum(MathUtil::divisors($house)) * 10;
 
             if ($presents >= $input[0]) {
                 break;
@@ -43,9 +29,9 @@ class Puzzle extends AbstractPuzzle
     {
         $presents = 0;
         $house = 1;
-        
+
         while (true) {
-            $divisors = $this->getDivisors($house);
+            $divisors = MathUtil::divisors($house);
 
             foreach ($divisors as $key => $divisor) {
                 if ($divisor * 50 < $house) {
