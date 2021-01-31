@@ -57,7 +57,7 @@ class Puzzle extends AbstractPuzzle
         $steps = 0;
         while ($this->molecule !== 'e') {
             foreach ($map as $el => $rep) {
-                $pos = strpos($this->molecule, $el);
+                $pos = strpos($this->molecule, (string)$el);
                 if ($pos !== false) {
                     $this->molecule = substr_replace($this->molecule, $rep, $pos, strlen((string)$el));
                     $steps++;
