@@ -34,9 +34,15 @@ class Submarine
         return $this->aim;
     }
 
+    public function getResult(): int
+    {
+        return $this->x * $this->y;
+    }
+
     public function move1(string $instruction): void
     {
         [$direction, $units] = explode(' ', $instruction);
+        $units = intval($units);
 
         switch ($direction) {
             case self::FORWARD:
@@ -54,6 +60,7 @@ class Submarine
     public function move2(string $instruction): void
     {
         [$direction, $units] = explode(' ', $instruction);
+        $units = intval($units);
 
         switch ($direction) {
             case self::FORWARD:

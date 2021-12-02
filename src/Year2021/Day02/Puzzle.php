@@ -14,7 +14,7 @@ class Puzzle extends AbstractPuzzle
             $submarine->move1($instruction);
         }
 
-        return (string)$submarine->getX() * $submarine->getY();
+        return (string)$submarine->getResult();
     }
 
     public function exec2(array $input = []): string
@@ -25,6 +25,6 @@ class Puzzle extends AbstractPuzzle
             $submarine->move2($instruction);
         }
 
-        return (string)$submarine->getX() * $submarine->getY();
+        return (string)$submarine->getResult();
     }
 }
