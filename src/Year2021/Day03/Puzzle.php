@@ -32,7 +32,20 @@ class Puzzle extends AbstractPuzzle
     {
         $sum = array_sum(array_column($array, $column));
         
-        return intval($sum > count($array) / 2);
+        return intval($sum >= count($array) / 2);
+    }
+
+    private function getCommonArray(array $array, int $column, int $more): array
+    {
+        if ($this->getCommonBit($array, $column)) {
+            return array_filter($array, function ($el) use ($column, $more) {
+                return $el[$column] === $more;
+            });
+        } else {
+            return array_filter($array, function ($el) use ($column, $more) {
+                return $el[$column] !== $more;
+            });
+        }
     }
 
     public function exec1(array $input = []): string
@@ -51,24 +64,6 @@ class Puzzle extends AbstractPuzzle
         $epsilon = bindec($epsilon_rate);
 
         return (string)($gamma * $epsilon);
-    }
-
-
-    private function getCommonArray(array $array, int $column, int $more): array
-    {
-        $middle = count($array) / 2;
-
-        $sum = array_sum(array_column($array, $column));
-
-        if ($sum >= $middle) {
-            return array_filter($array, function ($el) use ($column, $more) {
-                return $el[$column] === $more;
-            });
-        } else {
-            return array_filter($array, function ($el) use ($column, $more) {
-                return $el[$column] !== $more;
-            });
-        }
     }
 
     public function exec2(array $input = []): string
