@@ -33,7 +33,7 @@ class Puzzle extends AbstractPuzzle
         $result = 0;
 
         foreach ($array as $number) {
-            $diff = static::YEAR - $number;
+            $diff = self::YEAR - $number;
             if (in_array($diff, $array, true)) {
                 $result = $number * $diff;
                 break;
@@ -48,7 +48,7 @@ class Puzzle extends AbstractPuzzle
         $result = 0;
 
         for ($i = 0; $i < count($array); $i++) {
-            $diff = static::YEAR - $array[$i];
+            $diff = self::YEAR - $array[$i];
             for ($j = $i + 1; $j < count($array); $j++) {
                 $diff = $diff - $array[$j];
                 if (in_array($diff, $array, true)) {
