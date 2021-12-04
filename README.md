@@ -30,7 +30,7 @@ $ docker-compose exec php bin/console puzzle:exec [-y|--year YEAR] [-d|--day DAY
 
 ### Requirement
 
-- php 7.2 or Higher
+- php 8.0 or Higher
 
 ### Running
 
