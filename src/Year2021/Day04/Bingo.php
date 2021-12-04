@@ -52,7 +52,6 @@ class Bingo
     public function win(): array
     {
         foreach ($this->marks as $num_board => $board) {
-
             for ($i = 0; $i < 5; $i++) {
                 if (array_sum($board[$i]) === 5) {
                     if (false === array_search($num_board, $this->wins)) {
