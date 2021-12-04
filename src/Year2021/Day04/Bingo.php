@@ -31,24 +31,19 @@ class Bingo
     public function play(int $number): void
     {
         foreach ($this->boards as $num_board => $board) {
-            $row = null;
-            $col = null;
+            $row = false;
+            $col = false;
 
             for ($i = 0; $i < 5; $i++) {
                 if (false !== array_search($number, $board[$i])) {
                     $row = $i;
-                    break;
                 }
-            }
-
-            for ($i = 0; $i < 5; $i++) {
                 if (false !== array_search($number, array_column($board, $i))) {
                     $col = $i;
-                    break;
                 }
             }
 
-            if (!is_null($row) && !is_null($col)) {
+            if (false !== $row && false !== $col) {
                 $this->marks[$num_board][$row][$col] = 1;
             }
         }
@@ -57,18 +52,14 @@ class Bingo
     public function win(): array
     {
         foreach ($this->marks as $num_board => $board) {
+
             for ($i = 0; $i < 5; $i++) {
-                $sum = array_sum($board[$i]);
-                if ($sum === 5) {
+                if (array_sum($board[$i]) === 5) {
                     if (false === array_search($num_board, $this->wins)) {
                         $this->wins[] = $num_board;
                     }
                 }
-            }
-
-            for ($i = 0; $i < 5; $i++) {
-                $sum = array_sum(array_column($board, $i));
-                if ($sum === 5) {
+                if (array_sum(array_column($board, $i)) === 5) {
                     if (false === array_search($num_board, $this->wins)) {
                         $this->wins[] = $num_board;
                     }
