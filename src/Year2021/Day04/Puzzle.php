@@ -42,34 +42,39 @@ class Puzzle extends AbstractPuzzle
 
     public function exec1(array $input = []): string
     {
-        $bingo = new Bingo($input['boards']);
+        $bingo = new Bingo($input['numbers']);
+        foreach ($input['boards'] as $board) {
+            $bingo->add(new Board($board));
+        }
 
-        foreach ($input['numbers'] as $number) {
+        foreach ($bingo->getNumbers() as $number) {
             $bingo->play($number);
-
-            $wins = $bingo->win();
-            if (count($wins)) {
-                return (string)$bingo->calc($number, $wins[0]);
+            
+            $first = $bingo->getFirstWin();
+            if ($first instanceof Board) {
+                return (string)($first->calc() * $number);
             }
         }
 
-        return (string)'';
+        return '';
     }
 
     public function exec2(array $input = []): string
     {
-        $bingo = new Bingo($input['boards']);
+        $bingo = new Bingo($input['numbers']);
+        foreach ($input['boards'] as $board) {
+            $bingo->add(new Board($board));
+        }
 
-        foreach ($input['numbers'] as $number) {
+        foreach ($bingo->getNumbers() as $number) {
             $bingo->play($number);
-
-            $wins = $bingo->win();
-            if (count($wins) === $bingo->getNumBoards()) {
-                $last_board = $bingo->getNumBoards() - 1;
-                return (string)$bingo->calc($number, $wins[$last_board]);
+            
+            $last = $bingo->getLastWin();
+            if ($last instanceof Board) {
+                return (string)($last->calc() * $number);
             }
         }
 
-        return (string)'';
+        return '';
     }
 }
