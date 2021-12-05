@@ -24,12 +24,11 @@ class Hydrothermal
         
         foreach ($this->lines as $line) {
             foreach ($line->getPoints() as $point) {
-                $xy = sprintf('%d,%d', $point->getX(), $point->getY());
-                if (!isset($points[$xy])) {
-                    $points[$xy] = 0;
+                if (!isset($points[$point->__toString()])) {
+                    $points[$point->__toString()] = 0;
                 }
 
-                $points[$xy]++;
+                $points[$point->__toString()]++;
             }
         }
 

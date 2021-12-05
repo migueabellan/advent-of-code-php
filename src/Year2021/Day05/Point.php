@@ -22,4 +22,9 @@ class Point
     {
         return $this->y;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%d,%d', $this->x, $this->y);
+    }
 }

@@ -38,7 +38,7 @@ class Puzzle extends AbstractPuzzle
     {
         $hydrothermal = new Hydrothermal();
         foreach ($input as $line) {
-            if ($line->isHorizontalOrVertical()) {
+            if ($line->isHorizontal() || $line->isVertical()) {
                 $hydrothermal->add($line);
             }
         }
@@ -50,7 +50,7 @@ class Puzzle extends AbstractPuzzle
     {
         $hydrothermal = new Hydrothermal();
         foreach ($input as $line) {
-            if ($line->isHorizontalOrVertical() || $line->isDiagonal()) {
+            if ($line->isHorizontal() || $line->isVertical() || $line->isDiagonal()) {
                 $hydrothermal->add($line);
             }
         }
