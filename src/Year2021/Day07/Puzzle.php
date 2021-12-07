@@ -25,23 +25,23 @@ class Puzzle extends AbstractPuzzle
 
     public function exec1(array $input = []): string
     {
-        $max = max($input);
+        sort($input, SORT_NUMERIC);
 
-        $horizontals = [];
-        for ($i = 0; $i <= $max; $i++) {
-            $sum = 0;
-            foreach ($input as $position) {
-                $sum += abs($position - $i);
-            }
-            $horizontals[$i] = $sum;
+        $median = $input[count($input) / 2];
+
+        $sum = 0;
+        foreach ($input as $position) {
+            $sum += abs($position - $median);
         }
 
-        return (string)min($horizontals);
+        return (string)$sum;
     }
 
     public function exec2(array $input = []): string
     {
-        $max = max($input);
+        sort($input, SORT_NUMERIC);
+
+        $max = max($input) / 2;
 
         $horizontals = [];
         for ($i = 0; $i <= $max; $i++) {
