@@ -25,5 +25,9 @@ jobs:
     - name: Run parallel
       run: composer parallel
 
-    - name: Run phpunit
-      run: php vendor/bin/phpunit --testdox tests
+    # - name: Run phpunit Year 2015
+    #  run: php vendor/bin/phpunit --testdox tests/Year2015
+    #- name: Run phpunit Year 2020
+    #  run: php vendor/bin/phpunit --testdox tests/Year2020
+    - name: Run phpunit Year 2021
+      run: php vendor/bin/phpunit --testdox tests/Year2021
