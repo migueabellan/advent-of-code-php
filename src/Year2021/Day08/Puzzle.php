@@ -18,14 +18,14 @@ class Puzzle extends AbstractPuzzle
                 $explode = explode('|', $line);
                 $array[] = [
                     'pattern' => array_map(function ($el) {
-                        $a = str_split($el);
-                        sort($a);
-                        return implode($a);
+                        $segments = str_split($el);
+                        sort($segments);
+                        return $segments;
                     }, explode(' ', trim($explode[0]))),
                     'output' => array_map(function ($el) {
-                        $a = str_split($el);
-                        sort($a);
-                        return implode($a);
+                        $segments = str_split($el);
+                        sort($segments);
+                        return $segments;
                     }, explode(' ', trim($explode[1])))
                 ];
             }
@@ -42,7 +42,7 @@ class Puzzle extends AbstractPuzzle
         }, []);
 
         $uniques = array_filter($outputs, function ($el) {
-            return in_array(strlen($el), [2, 3, 4, 7]);
+            return in_array(count($el), [2, 3, 4, 7]);
         });
 
         return (string)count($uniques);
@@ -54,7 +54,7 @@ class Puzzle extends AbstractPuzzle
 
         foreach ($input as $entry) {
             $display = new Display($entry['pattern']);
-            $digits = '';
+            $digits = 0;
             foreach ($entry['output'] as $output) {
                 $digit = $display->getNumberBy($output);
                 $digits = intval(sprintf('%d%d', $digits, $digit));

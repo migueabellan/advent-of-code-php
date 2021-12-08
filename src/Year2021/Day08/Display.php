@@ -8,31 +8,23 @@ class Display
 
     public function __construct(array $digits)
     {
-        $zero = '';
-        $one = '';
-        $two = '';
-        $three = '';
-        $four = '';
-        $five = '';
-        $six = '';
-        $seven = '';
-        $eight = '';
-        $nine = '';
+        $one = current(array_filter($digits, fn ($el) => count($el) === 2));
+        $seven = current(array_filter($digits, fn ($el) => count($el) === 3));
+        $four = current(array_filter($digits, fn ($el) => count($el) === 4));
+        $eight = current(array_filter($digits, fn ($el) => count($el) === 7));
 
-        $one = current(array_filter($digits, fn ($el) => strlen($el) === 2));
-        $seven = current(array_filter($digits, fn ($el) => strlen($el) === 3));
-        $four = current(array_filter($digits, fn ($el) => strlen($el) === 4));
-        $eight = current(array_filter($digits, fn ($el) => strlen($el) === 7));
+        $digits_with_five = array_filter($digits, fn ($el) => count($el) === 5);
+        $digits_with_six = array_filter($digits, fn ($el) => count($el) === 6);
 
-        $digits_with_five = array_filter($digits, fn ($el) => strlen($el) === 5);
-        $digits_with_six = array_filter($digits, fn ($el) => strlen($el) === 6);
-
+        $two = [];
+        $three = [];
+        $five = [];
         foreach ($digits_with_five as $digit) {
-            $merge_with_seven = array_unique(array_merge(str_split($digit), str_split($seven)));
+            $merge_with_seven = array_unique(array_merge($digit, $seven));
             if (count($merge_with_seven) === 5) {
                 $three = $digit;
             } else {
-                $merge_with_four = array_unique(array_merge(str_split($digit), str_split($four)));
+                $merge_with_four = array_unique(array_merge($digit, $four));
                 if (count($merge_with_four) === 6) {
                     $five = $digit;
                 } elseif (count($merge_with_four) === 7) {
@@ -41,12 +33,15 @@ class Display
             }
         }
 
+        $zero = [];
+        $six = [];
+        $nine = [];
         foreach ($digits_with_six as $digit) {
-            $merge_with_four_seven = array_unique(array_merge(str_split($digit), str_split($four), str_split($seven)));
+            $merge_with_four_seven = array_unique(array_merge($digit, $four, $seven));
             if (count($merge_with_four_seven) === 6) {
                 $nine = $digit;
             } else {
-                $merge_with_five = array_unique(array_merge(str_split($digit), str_split($five)));
+                $merge_with_five = array_unique(array_merge($digit, $five));
                 if (count($merge_with_five) === 6) {
                     $six = $digit;
                 } elseif (count($merge_with_five) === 7) {
@@ -69,8 +64,14 @@ class Display
         ];
     }
 
-    public function getNumberBy(string $str): int
+    public function getNumberBy(array $segments): int
     {
-        return intval(array_search($str, $this->digits));
+        foreach ($this->digits as $k => $digit) {
+            if ($digit === $segments) {
+                return $k;
+            }
+        }
+
+        return 0;
     }
 }
