@@ -28,7 +28,6 @@ class Puzzle extends AbstractPuzzle
         $cave = new Cave($input);
         $low_points = $cave->getLowPoints();
 
-
         return (string)intval(count($low_points) + array_reduce($low_points, function ($carry, $el) {
             return $carry + $el->getValue();
         }, 0));
@@ -37,13 +36,7 @@ class Puzzle extends AbstractPuzzle
     public function exec2(array $input = []): string
     {
         $cave = new Cave($input);
-        $low_points = $cave->getLowPoints();
-
-
-        $basins = [];
-        foreach ($low_points as $point) {
-            $basins[] = $cave->checkAdjacents($point->getX(), $point->getY());
-        }
+        $basins = $cave->getBasins();
 
         rsort($basins);
 

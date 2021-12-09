@@ -15,32 +15,50 @@ class Cave
     {
         $adyacents = [];
 
-        $adyacents[] = new Point($x - 1, $y, $this->map[$x - 1][$y] ?? PHP_INT_MAX);
-        $adyacents[] = new Point($x, $y + 1, $this->map[$x][$y + 1] ?? PHP_INT_MAX);
-        $adyacents[] = new Point($x + 1, $y, $this->map[$x + 1][$y] ?? PHP_INT_MAX);
-        $adyacents[] = new Point($x, $y - 1, $this->map[$x][$y - 1] ?? PHP_INT_MAX);
-
+        foreach ([[-1, 0], [0, 1], [1, 0], [0, -1]] as [$i, $j]) {
+            if (isset($this->map[$x + $i][$y + $j])) {
+                $adyacents[] = new Point($x + $i, $y + $j, $this->map[$x + $i][$y + $j]);
+            }
+        }
+        
         return $adyacents;
+    }
+
+
+    private function checkAdjacents(Point $point, array &$result = []): array
+    {
+        $this->map[$point->getX()][$point->getY()] = PHP_INT_MAX;
+
+        $result[] = $point->__toString();
+
+        $adyacents = $this->getAdyacents($point->getX(), $point->getY());
+        $adyacents = array_filter($adyacents, function ($el) {
+            return $el->getValue() < 9;
+        });
+
+        foreach ($adyacents as $point) {
+            if ($this->map[$point->getX()][$point->getY()] < 9) {
+                $this->checkAdjacents($point, $result);
+            }
+        }
+
+        return $result;
     }
 
     public function getLowPoints(): array
     {
         $low_points = [];
 
-        $rows = count($this->map);
-        $cols = count($this->map[0]);
+        foreach ($this->map as $x => $row) {
+            foreach ($row as $y => $value) {
+                $adyacents = $this->getAdyacents($x, $y);
 
-        for ($i = 0; $i < $rows; $i++) {
-            for ($j = 0; $j < $cols; $j++) {
-                $value = $this->map[$i][$j];
-
-                $adyacents = $this->getAdyacents($i, $j);
-                $adyacents = array_filter($adyacents, function ($el) use ($value) {
+                $adyacents_lower = array_filter($adyacents, function ($el) use ($value) {
                     return $value < $el->getValue();
                 });
 
-                if (count($adyacents) === 4) {
-                    $low_points[] = new Point($i, $j, $value);
+                if (count($adyacents) === count($adyacents_lower)) {
+                    $low_points[] = new Point($x, $y, $value);
                 }
             }
         }
@@ -48,17 +66,15 @@ class Cave
         return $low_points;
     }
 
-    public function checkAdjacents(int $x, int $y): int
+    public function getBasins(): array
     {
-        $this->map[$x][$y] = PHP_INT_MAX;
+        $basins = [];
 
-        $area = 1;
-        foreach ([[-1, 0], [0, 1], [1, 0], [0, -1]] as [$i, $j]) {
-            if (isset($this->map[$x + $i][$y + $j]) && $this->map[$x + $i][$y + $j] < 9) {
-                $area += $this->checkAdjacents($x + $i, $y + $j);
-            }
+        foreach ($this->getLowPoints() as $point) {
+            $result = $this->checkAdjacents($point);
+            $basins[] = count($result);
         }
 
-        return $area;
+        return $basins;
     }
 }
