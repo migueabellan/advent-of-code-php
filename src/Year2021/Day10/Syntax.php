@@ -4,88 +4,102 @@ namespace App\Year2021\Day10;
 
 class Syntax
 {
-    private const PARENTESHE_OPEN   = '(';
-    private const PARENTESHE_CLOSE  = ')';
-    private const BRACKET_OPEN      = '[';
-    private const BRACKET_CLOSE     = ']';
-    private const CURLY_OPEN        = '{';
-    private const CURLY_CLOSE       = '}';
-    private const SYMBOL_OPEN       = '<';
-    private const SYMBOL_CLOSE      = '>';
+    private const STATUS_CORRUPTED  = 1;
+    private const STATUS_INCOMPLETE = 2;
 
-    private const OPEN = [
-        self::PARENTESHE_OPEN,
-        self::BRACKET_OPEN,
-        self::CURLY_OPEN,
-        self::SYMBOL_OPEN,
+    private const CHARS = [
+        '(' => ')',
+        '[' => ']',
+        '{' => '}',
+        '<' => '>',
     ];
 
-    private const CLOSE = [
-        self::PARENTESHE_CLOSE,
-        self::BRACKET_CLOSE,
-        self::CURLY_CLOSE,
-        self::SYMBOL_CLOSE,
+    private const SCORES = [
+        ')' => 3,
+        ']' => 57,
+        '}' => 1197,
+        '>' => 25137,
+        '(' => 1,
+        '[' => 2,
+        '{' => 3,
+        '<' => 4,
     ];
 
-    private const SCORE_CHECKER = [
-        self::PARENTESHE_CLOSE  => 3,
-        self::BRACKET_CLOSE     => 57,
-        self::CURLY_CLOSE       => 1197,
-        self::SYMBOL_CLOSE      => 25137
-    ];
+    private string $line;
+    private int $status = 0;
+    private int $score = 0;
 
-    private const SCORE_MISSING = [
-        self::PARENTESHE_OPEN  => 1,
-        self::BRACKET_OPEN     => 2,
-        self::CURLY_OPEN       => 3,
-        self::SYMBOL_OPEN      => 4
-    ];
-
-    private array $chunks;
-
-    public function __construct(array $chunks)
+    public function __construct(string $line)
     {
-        $this->chunks = $chunks;
+        $this->line = $this->optimize($line);
+
+        $checker = $this->checker();
+        if (0 !== $checker) {
+            $this->status = self::STATUS_CORRUPTED;
+            $this->score = $checker;
+        } else {
+            $this->status = self::STATUS_INCOMPLETE;
+            $this->score = $this->missing();
+        }
     }
 
-    public function checker(): int
+    private function optimize(string $line): string
     {
-        $stack = [];
+        $patterns = ['/\(\)/', '/\[\]/', '/\{\}/', '/\<\>/'];
 
-        foreach ($this->chunks as $char) {
-            if (in_array($char, self::OPEN)) {
-                array_push($stack, $char);
-            } elseif (in_array($char, self::CLOSE)) {
-                $last = array_pop($stack);
-                if (array_search($char, self::CLOSE) !== array_search($last, self::OPEN)) {
-                    return self::SCORE_CHECKER[$char];
+        do {
+            $line = preg_replace($patterns, '', $line);
+
+            $exist = false;
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $line, $matches)) {
+                    $exist = true;
+                    break;
                 }
             }
-        }
+        } while ($exist);
 
-        return 0;
+        return $line;
     }
 
-    public function missing(): int
+    private function checker(): int
     {
-        $stack = [];
-
-        foreach ($this->chunks as $char) {
-            if (in_array($char, self::OPEN)) {
-                array_push($stack, $char);
-            } elseif (in_array($char, self::CLOSE)) {
-                array_pop($stack);
-            }
-        }
-
-        $stack = array_reverse($stack);
-
         $score = 0;
-        foreach ($stack as $char) {
-            $score *=5;
-            $score += self::SCORE_MISSING[$char];
+        
+        for ($i = 0; $i < strlen($this->line); $i++) {
+            if (in_array($this->line[$i], self::CHARS)) {
+                $score = self::SCORES[$this->line[$i]];
+                break;
+            }
         }
 
         return $score;
+    }
+
+    private function missing(): int
+    {
+        $score = 0;
+
+        for ($i = strlen($this->line) - 1; $i >= 0; $i--) {
+            $score *= 5;
+            $score += self::SCORES[$this->line[$i]];
+        }
+
+        return $score;
+    }
+
+    public function isCorrupted(): bool
+    {
+        return $this->status === self::STATUS_CORRUPTED;
+    }
+
+    public function isIncomplete(): bool
+    {
+        return $this->status === self::STATUS_INCOMPLETE;
+    }
+
+    public function getScore(): int
+    {
+        return $this->score;
     }
 }
