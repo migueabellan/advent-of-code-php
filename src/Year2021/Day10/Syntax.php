@@ -31,20 +31,6 @@ class Syntax
 
     public function __construct(string $line)
     {
-        $this->line = $this->optimize($line);
-
-        $checker = $this->checker();
-        if (0 !== $checker) {
-            $this->status = self::STATUS_CORRUPTED;
-            $this->score = $checker;
-        } else {
-            $this->status = self::STATUS_INCOMPLETE;
-            $this->score = $this->missing();
-        }
-    }
-
-    private function optimize(string $line): string
-    {
         $patterns = ['/\(\)/', '/\[\]/', '/\{\}/', '/\<\>/'];
 
         do {
@@ -59,33 +45,25 @@ class Syntax
             }
         } while ($exist);
 
-        return $line;
-    }
+        $this->line = $line;
 
-    private function checker(): int
-    {
-        $score = 0;
-        
+
+        // Corrupted
         for ($i = 0; $i < strlen($this->line); $i++) {
             if (in_array($this->line[$i], self::CHARS)) {
-                $score = self::SCORES[$this->line[$i]];
-                break;
+                $this->status = self::STATUS_CORRUPTED;
+                $this->score = self::SCORES[$this->line[$i]];
+                return;
             }
         }
 
-        return $score;
-    }
-
-    private function missing(): int
-    {
-        $score = 0;
-
+        
+        // Incomplete
+        $this->status = self::STATUS_INCOMPLETE;
+        $this->score = 0;
         for ($i = strlen($this->line) - 1; $i >= 0; $i--) {
-            $score *= 5;
-            $score += self::SCORES[$this->line[$i]];
+            $this->score = $this->score * 5 + self::SCORES[$this->line[$i]];
         }
-
-        return $score;
     }
 
     public function isCorrupted(): bool
