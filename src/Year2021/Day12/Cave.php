@@ -29,16 +29,16 @@ class Cave
         return $this;
     }
 
-    public function getPaths(): array
+    public function getPathsSingle(): array
     {
         $this->paths = [];
 
-        $this->setPath($this->nodes[Node::START]);
+        $this->setPathSingle($this->nodes[Node::START]);
 
         return $this->paths;
     }
 
-    private function setPath(Node $node, array $paths = [], array $visited = []): void
+    private function setPathSingle(Node $node, array $paths = [], array $visited = []): void
     {
         $paths[] = $node->getValue();
 
@@ -56,7 +56,52 @@ class Cave
         });
 
         foreach ($children as $child) {
-            $this->setPath($this->nodes[$child->getValue()], $paths, $visited);
+            $this->setPathSingle($this->nodes[$child->getValue()], $paths, $visited);
+        }
+    }
+
+
+    public function getPathsTwice(): array
+    {
+        $this->paths = [];
+
+        $this->setPathTwice($this->nodes[Node::START]);
+
+        return $this->paths;
+    }
+
+    private function setPathTwice(Node $node, array $paths = [], array $visited = [], array $visited_twice = []): void
+    {
+        $paths[] = $node->getValue();
+
+        if (count($visited_twice) > 2) {
+            return;
+        }
+
+        $lowers = array_count_values(array_filter($paths, fn ($el) => ctype_lower($el)));
+        if (count(array_filter($lowers, fn ($el) => $el > 1)) > 1) {
+            return;
+        }
+
+        if ($node->getIsEnd()) {
+            $this->paths[] = $paths;
+            return;
+        }
+
+        if ($node->getIsSmall()) {
+            if (in_array($node->getValue(), $visited)) {
+                $visited_twice[] = $node->getValue();
+            }
+
+            $visited[] = $node->getValue();
+        }
+
+        $children = array_filter($node->getChildren(), function ($el) use ($visited_twice) {
+            return !$el->getIsStart() && !in_array($el->getValue(), $visited_twice);
+        });
+
+        foreach ($children as $child) {
+            $this->setPathTwice($this->nodes[$child->getValue()], $paths, $visited, $visited_twice);
         }
     }
 

@@ -33,13 +33,19 @@ class Puzzle extends AbstractPuzzle
         }
         // $cave->print();
 
-        return (string)count($cave->getPaths());
+        return (string)count($cave->getPathsSingle());
     }
 
     public function exec2(array $input = []): string
     {
-        $result = 0;
+        $cave = new Cave();
+        foreach ($input as $row) {
+            $n1 = new Node($row[0]);
+            $n2 = new Node($row[1]);
+            $cave->addConnection($n1, $n2);
+        }
+        // $cave->print();
 
-        return (string)$result;
+        return (string)count($cave->getPathsTwice());
     }
 }
