@@ -15,6 +15,7 @@ class Puzzle extends AbstractPuzzle
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
+                /* @phpstan-ignore-next-line */
                 [$min, $max, $letter, $pass] = preg_split('/[- :]+/', $line);
                 $array[] = [
                     'min' => (int)$min,
