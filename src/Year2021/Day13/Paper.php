@@ -11,8 +11,6 @@ class Paper
 
     public function __construct(array $points)
     {
-        $this->points = $points;
-
         $width = max(array_map(fn ($el) => $el['x'], $points));
         $height = max(array_map(fn ($el) => $el['y'], $points));
 
