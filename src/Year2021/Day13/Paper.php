@@ -7,7 +7,6 @@ class Paper
     private const DOT = '#';
     private const EMPTY = '.';
 
-    private array $points = [];
     private array $paper = [];
 
     public function __construct(array $points)
@@ -99,7 +98,7 @@ class Paper
 
 
     /**
-     * Util print cavern
+     * Util print paper
      */
     public function print(): void
     {
