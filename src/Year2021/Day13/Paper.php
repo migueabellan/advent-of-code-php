@@ -16,7 +16,6 @@ class Paper
 
         for ($i = 0; $i <= $height; $i++) {
             $this->paper[$i] = array_fill(0, $width + 1, '.');
-            ;
         }
 
         foreach ($points as $p) {
