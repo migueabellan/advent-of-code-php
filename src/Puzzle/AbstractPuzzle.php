@@ -43,6 +43,6 @@ abstract class AbstractPuzzle implements InterfacePuzzle
     {
         echo "\nResult: \e[0;30;42m " . $string . " \e[0m\n\n";
 
-        echo 'Time: ' . ((microtime(true) * 1000) - $this->ini_time) . "\n";
+        echo 'Time: ' . round((microtime(true) * 1000) - $this->ini_time, 2) . " ms\n";
     }
 }
