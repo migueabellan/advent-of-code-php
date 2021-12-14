@@ -44,8 +44,6 @@ class Puzzle extends AbstractPuzzle
         
         $polymer->steps(40);
 
-        // var_dump($polymer->getTemplate());
-
         return (string)$polymer->calc();
     }
 }
