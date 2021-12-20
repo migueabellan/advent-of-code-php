@@ -7,11 +7,6 @@ class Image
     private const LIGHT = '#';
     private const DARK  = '.';
 
-    private array $inverted = [
-        self::DARK => self::LIGHT,
-        self::LIGHT => self::DARK,
-    ];
-
     private const COORDS = [
         [-1, -1], [-1, 0], [-1, 1],
         [ 0, -1], [ 0, 0], [ 0, 1],
@@ -21,7 +16,6 @@ class Image
     private string $algorithm;
     private array $input;
     private array $output;
-
 
     public function __construct(string $algorithm, array $input)
     {
@@ -43,24 +37,22 @@ class Image
 
     public function enhancement(int $loop = 1): void
     {
-        $default = self::DARK;
+        $ini = 0;
+        $end = count($this->input);
 
-        $startX = $startY = 0;
-        $width = count($this->input);
-
-        for ($i = 1; $i <= $loop; ++$i) {
-            $this->output = [];
-            for ($y = $startY - $i; $y < $width + $i; ++$y) {
-                for ($x = $startX - $i; $x < $width + $i; ++$x) {
-                    $number = $this->getBinaryNumber($y, $x, $default);
-                    $this->output[$y][$x] = $this->algorithm[$number];
-                }
+        for ($i = 1; $i <= $loop; $i++) {
+            if ($i % 2 === 0) {
+                $default = self::LIGHT;
+            } else {
+                $default = self::DARK;
             }
 
-            if ($default === self::DARK) {
-                $default = $this->algorithm[0];
-            } else {
-                $default = $this->inverted[$this->algorithm[0]];
+            $this->output = [];
+            for ($x = $ini - $i; $x < $end + $i; $x++) {
+                for ($y = $ini - $i; $y < $end + $i; $y++) {
+                    $number = $this->getBinaryNumber($x, $y, $default);
+                    $this->output[$x][$y] = $this->algorithm[$number];
+                }
             }
 
             $this->input = $this->output;
