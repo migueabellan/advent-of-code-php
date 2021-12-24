@@ -2,5 +2,12 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
 
-    excludes_analyse:
+    excludePaths:
         - %currentWorkingDirectory%/src/Command/PuzzleCommand.php
+        - %currentWorkingDirectory%/src/Enums
+
+    ignoreErrors:
+        - '#^Match expression does not handle remaining value: string#'
+        - '#^Access to undefined constant.*\\Enums\\\w+::\w+\.$#'
+        # - '#^Access to an undefined property.*\\Enums\\\w+::\$value\.$#'
+        # - '#^Call to an undefined static method.*\\Enums\\\w+::(from|tryFrom|cases)\(\)\.$#'

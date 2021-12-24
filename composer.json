@@ -4,7 +4,7 @@
     "keywords": ["advent-of-code", "php"],
     "type": "project",
     "license": "MIT",
-    "version": "20.12.0",
+    "version": "21.12.0",
     "authors": [
         {
           "name": "Miguel Ángel Abellán",
@@ -21,10 +21,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "phpstan/extension-installer": "^1.0",
-        "squizlabs/php_codesniffer": "^3.5",
-        "php-parallel-lint/php-parallel-lint": "^1.2",
-        "phploc/phploc": "^7.0"
+        "phploc/phploc": "^7.0",
+        "phpstan/extension-installer": "^1.1",
+        "squizlabs/php_codesniffer": "^3.6",
+        "php-parallel-lint/php-parallel-lint": "^1.3"
     },
     "autoload": {
         "psr-4": {
