@@ -4,11 +4,10 @@
     "keywords": ["advent-of-code", "php"],
     "type": "project",
     "license": "MIT",
-    "version": "21.12.0",
+    "version": "22.12.0",
     "authors": [
         {
           "name": "Miguel Ángel Abellán",
-          "email": "info@migueabellan.es",
           "homepage": "https://migueabellan.github.io",
           "role": "Developer"
         }
