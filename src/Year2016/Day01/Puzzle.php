@@ -29,7 +29,7 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
 
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
         $taxicab = new Taxicab();
 
@@ -37,10 +37,10 @@ class Puzzle extends AbstractPuzzle
             $taxicab->move($instruction['turn'], $instruction['steps']);
         }
 
-        return (string)$taxicab->length();
+        return $taxicab->length();
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
         $taxicab = new Taxicab();
 
@@ -48,6 +48,6 @@ class Puzzle extends AbstractPuzzle
             $taxicab->move($instruction['turn'], $instruction['steps']);
         }
 
-        return (string)$taxicab->length(true);
+        return $taxicab->length(true);
     }
 }

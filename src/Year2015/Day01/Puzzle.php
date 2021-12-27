@@ -6,23 +6,21 @@ use App\Puzzle\AbstractPuzzle;
 
 class Puzzle extends AbstractPuzzle
 {
-    private const UP = '(';
-    private const DOWN = ')';
+    private const UP    = '(';
+    private const DOWN  = ')';
 
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
         $directions = current($input);
 
         $up = substr_count($directions, self::UP);
         $down = substr_count($directions, self::DOWN);
         
-        return (string)($up - $down);
+        return $up - $down;
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
-        $result = 0;
-
         $directions = str_split(current($input));
 
         $floor = 0;
@@ -37,11 +35,10 @@ class Puzzle extends AbstractPuzzle
             }
 
             if (-1 === $floor) {
-                $result = $key + 1;
-                break;
+                return $key + 1;
             }
         }
 
-        return (string)$result;
+        return 0;
     }
 }
