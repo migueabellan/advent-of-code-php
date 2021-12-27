@@ -22,10 +22,10 @@ interface InterfacePuzzle
     /**
      * Algorithm for first puzzle
      */
-    public function exec1(array $array = []): string;
+    public function exec1(array $array = []): int|string;
 
     /**
      * Algorithm for second puzzle
      */
-    public function exec2(array $array = []): string;
+    public function exec2(array $array = []): int|string;
 }
