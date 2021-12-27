@@ -4,28 +4,28 @@ namespace App\Enums;
 
 // phpcs:disable
 enum Direction: string {
-    case NORTH  = 'NORTH';
-    case EAST   = 'EAST';
-    case SOUTH  = 'SOUTH';
-    case WEST   = 'WEST';
+    case UP     = 'U';
+    case LEFT   = 'L';
+    case DOWN   = 'D';
+    case RIGHT  = 'R';
 
     public function turnLeft(): self
     {
         return match ($this) {
-            self::NORTH => self::WEST,
-            self::EAST  => self::NORTH,
-            self::SOUTH => self::EAST,
-            self::WEST  => self::SOUTH
+            self::UP    => self::RIGHT,
+            self::LEFT  => self::UP,
+            self::DOWN  => self::LEFT,
+            self::RIGHT => self::DOWN
         };
     }
 
     public function turnRight(): self
     {
         return match ($this) {
-            self::NORTH => self::EAST,
-            self::EAST  => self::SOUTH,
-            self::SOUTH => self::WEST,
-            self::WEST  => self::NORTH
+            self::UP    => self::LEFT,
+            self::LEFT  => self::DOWN,
+            self::DOWN  => self::RIGHT,
+            self::RIGHT => self::UP
         };
     }
 }

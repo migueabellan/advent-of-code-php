@@ -7,11 +7,8 @@ use UnexpectedValueException;
 
 final class Taxicab
 {
-    private const LEFT  = 'L';
-    private const RIGHT = 'R';
-
     public function __construct(
-        private Direction $direction = Direction::NORTH,
+        private Direction $direction = Direction::UP,
         private int $x = 0,
         private int $y = 0,
         private int $first_x = 0,
@@ -23,24 +20,24 @@ final class Taxicab
 
     public function move(string $turn, int $steps): void
     {
-        $this->direction = match ($turn) {
-            self::LEFT  => $this->direction->turnLeft(),
-            self::RIGHT => $this->direction->turnRight(),
+        $this->direction = match (Direction::from($turn)) {
+            Direction::LEFT  => $this->direction->turnLeft(),
+            Direction::RIGHT => $this->direction->turnRight(),
             default => throw new UnexpectedValueException()
         };
 
         for ($i = 0; $i < $steps; $i++) {
             switch ($this->direction) {
-                case Direction::NORTH:
+                case Direction::UP:
                     $this->y++;
                     break;
-                case Direction::EAST:
+                case Direction::LEFT:
                     $this->x++;
                     break;
-                case Direction::SOUTH:
+                case Direction::DOWN:
                     $this->y--;
                     break;
-                case Direction::WEST:
+                case Direction::RIGHT:
                     $this->x--;
                     break;
             }
