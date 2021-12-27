@@ -10,4 +10,4 @@ parameters:
         # - '#^Match expression does not handle remaining value: string#'
         - '#^Access to undefined constant.*\\Enums\\\w+::\w+\.$#'
         # - '#^Access to an undefined property.*\\Enums\\\w+::\$value\.$#'
-        # - '#^Call to an undefined static method.*\\Enums\\\w+::(from|tryFrom|cases)\(\)\.$#'
+        - '#^Call to an undefined static method.*\\Enums\\\w+::(from|tryFrom|cases)\(\)\.$#'
