@@ -33,6 +33,6 @@ class Puzzle extends AbstractPuzzle
 
         sort($result);
 
-        return (string)$result[count($result) / 2];
+        return (string)$result[intval(count($result) / 2)];
     }
 }
