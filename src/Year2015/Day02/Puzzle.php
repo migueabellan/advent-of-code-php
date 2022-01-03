@@ -29,7 +29,7 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
 
-    public function exec1(array $array = []): string
+    public function exec1(array $array = []): int
     {
         $result = 0;
 
@@ -44,13 +44,13 @@ class Puzzle extends AbstractPuzzle
                 return $surface += (2 * $area);
             }, 0);
 
-            $result += ($surface + min($areas));
+            $result += ($surface + intval(min($areas)));
         }
         
-        return (string)$result;
+        return $result;
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $array = []): int
     {
         $result = 0;
 
@@ -60,7 +60,9 @@ class Puzzle extends AbstractPuzzle
                 2 * $present['w'],
                 2 * $present['h']
             ];
+
             sort($perimeter);
+
             $perimeter = $perimeter[0] + $perimeter[1];
 
             $volume = $present['l'] * $present['w'] * $present['h'];
@@ -68,6 +70,6 @@ class Puzzle extends AbstractPuzzle
             $result += ($perimeter + $volume);
         }
         
-        return (string)$result;
+        return $result;
     }
 }

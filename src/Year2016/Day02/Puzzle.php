@@ -37,7 +37,7 @@ class Puzzle extends AbstractPuzzle
             $bathroom->move($instructions);
         }
 
-        return (string)$bathroom->code();
+        return $bathroom->code();
     }
 
     public function exec2(array $input = []): string
@@ -56,6 +56,6 @@ class Puzzle extends AbstractPuzzle
             $bathroom->move($instructions);
         }
 
-        return (string)$bathroom->code();
+        return $bathroom->code();
     }
 }
