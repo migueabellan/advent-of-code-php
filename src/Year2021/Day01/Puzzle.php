@@ -22,18 +22,18 @@ class Puzzle extends AbstractPuzzle
         return $result;
     }
 
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
-        return (string)$this->countMeasurement($input);
+        return $this->countMeasurement($input);
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
         $windows = [];
         for ($i = 0; $i < count($input) - 2; $i++) {
             $windows[] = $input[$i] + $input[$i + 1] + $input[$i + 2];
         }
 
-        return (string)$this->countMeasurement($windows);
+        return $this->countMeasurement($windows);
     }
 }

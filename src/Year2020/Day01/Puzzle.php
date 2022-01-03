@@ -17,7 +17,7 @@ class Puzzle extends AbstractPuzzle
 
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
-                $array[] = (int)$line;
+                $array[] = intval($line);
             }
             fclose($file);
 
@@ -28,7 +28,7 @@ class Puzzle extends AbstractPuzzle
     }
     
         
-    public function exec1(array $array = []): string
+    public function exec1(array $array = []): int
     {
         $result = 0;
 
@@ -40,10 +40,10 @@ class Puzzle extends AbstractPuzzle
             }
         }
 
-        return (string)$result;
+        return $result;
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $array = []): int
     {
         $result = 0;
 
@@ -58,6 +58,6 @@ class Puzzle extends AbstractPuzzle
             }
         }
 
-        return (string)$result;
+        return $result;
     }
 }
