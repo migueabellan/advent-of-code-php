@@ -66,8 +66,8 @@ class Puzzle extends AbstractPuzzle
 
         $length = count($input);
 
-        for ($noun = 0; $noun < $length; ++$noun) {
-            for ($verb = 0; $verb < $length; ++$verb) {
+        for ($noun = 0; $noun < $length; $noun++) {
+            for ($verb = 0; $verb < $length; $verb++) {
                 $input[1] = $noun;
                 $input[2] = $verb;
 

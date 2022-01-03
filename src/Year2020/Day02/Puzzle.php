@@ -18,8 +18,8 @@ class Puzzle extends AbstractPuzzle
                 /* @phpstan-ignore-next-line */
                 [$min, $max, $letter, $pass] = preg_split('/[- :]+/', $line);
                 $array[] = [
-                    'min' => (int)$min,
-                    'max' => (int)$max,
+                    'min' => intval($min),
+                    'max' => intval($max),
                     'letter' => $letter,
                     'pass' => $pass
                 ];
@@ -30,7 +30,7 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
         
-    public function exec1(array $array = []): string
+    public function exec1(array $array = []): int
     {
         $result = 0;
 
@@ -46,10 +46,10 @@ class Puzzle extends AbstractPuzzle
             }
         }
 
-        return (string)$result;
+        return $result;
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $array = []): int
     {
         $result = 0;
         foreach ($array as $case) {
@@ -63,6 +63,6 @@ class Puzzle extends AbstractPuzzle
             }
         }
 
-        return (string)$result;
+        return $result;
     }
 }

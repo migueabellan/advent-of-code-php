@@ -6,7 +6,7 @@ use App\Puzzle\AbstractPuzzle;
 
 class Puzzle extends AbstractPuzzle
 {
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
         $submarine = new Submarine();
 
@@ -14,10 +14,10 @@ class Puzzle extends AbstractPuzzle
             $submarine->move1($instruction);
         }
 
-        return (string)$submarine->getResult();
+        return $submarine->getResult();
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
         $submarine = new Submarine();
 
@@ -25,6 +25,6 @@ class Puzzle extends AbstractPuzzle
             $submarine->move2($instruction);
         }
 
-        return (string)$submarine->getResult();
+        return $submarine->getResult();
     }
 }
