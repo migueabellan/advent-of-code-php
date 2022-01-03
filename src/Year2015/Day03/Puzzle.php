@@ -20,7 +20,7 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
 
-    public function exec1(array $array = []): string
+    public function exec1(array $array = []): int
     {
         $grid = new Grid();
         $grid->addPresent(0, 0);
@@ -32,10 +32,10 @@ class Puzzle extends AbstractPuzzle
             $grid->addPresent($santa->getX(), $santa->getY());
         }
         
-        return (string)$grid->getPresents();
+        return $grid->getPresents();
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $array = []): int
     {
         $grid = new Grid();
         $grid->addPresent(0, 0);
@@ -53,6 +53,6 @@ class Puzzle extends AbstractPuzzle
             }
         }
 
-        return (string)$grid->getPresents();
+        return $grid->getPresents();
     }
 }
