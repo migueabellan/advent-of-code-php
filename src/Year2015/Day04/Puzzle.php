@@ -6,7 +6,7 @@ use App\Puzzle\AbstractPuzzle;
 
 class Puzzle extends AbstractPuzzle
 {
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
         $secret = current($input);
 
@@ -15,10 +15,10 @@ class Puzzle extends AbstractPuzzle
             $i++;
         } while (!str_starts_with(md5($secret.$i), '00000'));
 
-        return (string)$i;
+        return $i;
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
         $secret = current($input);
 
@@ -28,6 +28,6 @@ class Puzzle extends AbstractPuzzle
             $i += 8; // to reduce exec time
         } while (!str_starts_with(md5($secret.$i), '000000'));
 
-        return (string)$i;
+        return $i;
     }
 }
