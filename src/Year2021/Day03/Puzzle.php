@@ -48,7 +48,7 @@ class Puzzle extends AbstractPuzzle
         }
     }
 
-    public function exec1(array $input = []): string
+    public function exec1(array $input = []): int
     {
         $gamma_rate = '';
         $epsilon_rate = '';
@@ -63,10 +63,10 @@ class Puzzle extends AbstractPuzzle
         $gamma = bindec($gamma_rate);
         $epsilon = bindec($epsilon_rate);
 
-        return (string)($gamma * $epsilon);
+        return intval($gamma * $epsilon);
     }
 
-    public function exec2(array $input = []): string
+    public function exec2(array $input = []): int
     {
         $i = 0;
         $aux = $input;
@@ -87,6 +87,6 @@ class Puzzle extends AbstractPuzzle
         $co2_rating = bindec(implode('', array_shift($aux)));
         
 
-        return (string)($oxygen_rating * $co2_rating);
+        return intval($oxygen_rating * $co2_rating);
     }
 }

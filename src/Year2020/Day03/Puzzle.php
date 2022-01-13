@@ -20,7 +20,7 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
     
-    public function exec1(array $array = []): string
+    public function exec1(array $array = []): int
     {
         $result = 0;
         $right = 3;
@@ -33,10 +33,10 @@ class Puzzle extends AbstractPuzzle
             $mod = ($mod = $mod + $right) % (strlen($line) - 1);
         }
 
-        return (string)$result;
+        return $result;
     }
 
-    public function exec2(array $array = []): string
+    public function exec2(array $array = []): int
     {
         $cases = [
             ['right' => 1, 'bottom' => 1],
@@ -65,6 +65,6 @@ class Puzzle extends AbstractPuzzle
             $result *= $v;
         }
 
-        return (string)$result;
+        return $result;
     }
 }
