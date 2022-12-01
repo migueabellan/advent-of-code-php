@@ -17,7 +17,7 @@ class Puzzle extends AbstractPuzzle
         if ($file = fopen($this->getPathIn(), 'r')) {
             while (($line = fgets($file)) !== false) {
                 $line = trim($line);
-                if($line !== ''){
+                if ($line !== '') {
                     $total += intval($line);
                 } else {
                     $array[] = $total;
