@@ -17,7 +17,8 @@ composer/install:
 lint:
 	@docker-compose exec php composer cscheck
 	@docker-compose exec php composer csfix
-
-test:
 	@docker-compose exec php composer phpstan
 	@docker-compose exec php composer parallel
+
+test:
+	@docker-compose exec php php vendor/bin/phpunit --testdox tests/Year2022/
