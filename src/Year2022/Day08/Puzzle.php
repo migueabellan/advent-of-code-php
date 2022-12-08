@@ -25,8 +25,6 @@ class Puzzle extends AbstractPuzzle
     public function exec1(array $input = []): int
     {
         $treetop = new Treetop($input);
-        $treetop->analice();
-        // $treetop->print();
 
         return $treetop->visibleFromOutside();
     }
@@ -34,9 +32,7 @@ class Puzzle extends AbstractPuzzle
     public function exec2(array $input = []): int
     {
         $treetop = new Treetop($input);
-        $treetop->analice2();
-        // $treetop->print();
 
-        return $treetop->maxScore();
+        return $treetop->maxScenicScore();
     }
 }

@@ -5,129 +5,82 @@ namespace App\Year2022\Day08;
 final class Treetop
 {
     private array $visibilities = [];
+    private int $rows = 0;
+    private int $cols = 0;
 
     public function __construct(
         private array $grid
     ) {
-        foreach ($grid as $row) {
-            $this->visibilities[] = array_fill(0, count($row), 0);
-        }
+        $this->rows = count($grid);
+        $this->cols = count($grid[0]);
+
+        $this->visibilities = array_fill(0, $this->rows, array_fill(0, $this->cols, 0));
     }
 
-    private function isVisible(int $i, int $j): bool
+    private function getAdyacents(int $i, int $j): array
     {
-        $tree = $this->grid[$i][$j];
         $row = $this->grid[$i];
         $column = array_column($this->grid, $j);
 
-        $directions = [
-            'west' => array_reverse(array_slice($row, 0, $j)),
-            'east' => array_slice($row, $j + 1),
-            'north' => array_reverse(array_slice($column, 0, $i)),
-            'south' => array_slice($column, $i + 1),
+        return [
+            'top' => array_reverse(array_slice($column, 0, $i)),
+            'right' => array_slice($row, $j + 1),
+            'bottom' => array_slice($column, $i + 1),
+            'left' => array_reverse(array_slice($row, 0, $j)),
         ];
-
-        foreach ($directions as $direction) {
-            if (empty($direction)) {
-                return true;
-            }
-            if (max($direction) < $tree) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function analice(): void
-    {
-        $rows = count($this->grid);
-        $cols = count($this->grid[0]);
-
-        for ($i = 0; $i < $rows; $i++) {
-            for ($j = 0; $j < $cols; $j++) {
-                if ($this->isVisible($i, $j)) {
-                    $this->visibilities[$i][$j] = 1;
-                }
-            }
-        }
     }
 
     public function visibleFromOutside(): int
     {
-        $result = 0;
-
-        foreach ($this->visibilities as $row) {
-            $result += intval(array_sum($row));
-        }
-
-        return $result;
-    }
-
-
-
-
-
-
-
-
-    private function countVisibles(int $i, int $j): int
-    {
-        $tree = $this->grid[$i][$j];
-        $row = $this->grid[$i];
-        $column = array_column($this->grid, $j);
-
-        $directions = [
-            'west' => array_reverse(array_slice($row, 0, $j)),
-            'east' => array_slice($row, $j + 1),
-            'north' => array_reverse(array_slice($column, 0, $i)),
-            'south' => array_slice($column, $i + 1),
-        ];
-
-        $total = 1;
-        foreach ($directions as $direction) {
-            $count = 0;
-            foreach ($direction as $value) {
-                $count++;
-                if ($value >= $tree) {
-                    break;
+        for ($i = 0; $i < $this->rows; $i++) {
+            for ($j = 0; $j < $this->cols; $j++) {
+                $directions = $this->getAdyacents($i, $j);
+                foreach ($directions as $direction) {
+                    if (empty($direction) || max($direction) < $this->grid[$i][$j]) {
+                        $this->visibilities[$i][$j] = 1;
+                    }
                 }
             }
-
-            $total *= $count;
         }
 
-        return $total;
+        return array_reduce(
+            $this->visibilities,
+            static fn(int $result, array $row) => $result + intval(array_sum($row)),
+            initial: 0
+        );
     }
 
-    public function analice2(): void
+    public function maxScenicScore(): int
     {
-        $rows = count($this->grid);
-        $cols = count($this->grid[0]);
+        for ($i = 0; $i < $this->rows; $i++) {
+            for ($j = 0; $j < $this->cols; $j++) {
+                $directions = $this->getAdyacents($i, $j);
 
-        for ($i = 0; $i < $rows; $i++) {
-            for ($j = 0; $j < $cols; $j++) {
-                $this->visibilities[$i][$j] = $this->countVisibles($i, $j);
+                $total = 1;
+                foreach ($directions as $direction) {
+                    $count = 0;
+                    foreach ($direction as $value) {
+                        $count++;
+                        if ($value >= $this->grid[$i][$j]) {
+                            break;
+                        }
+                    }
+                    $total *= $count;
+                }
+
+                $this->visibilities[$i][$j] = $total;
             }
         }
+
+        return max(array_map(
+            static fn(array $row) => max($row),
+            $this->visibilities
+        ));
     }
 
-
-    public function maxScore(): int
-    {
-        $result = 0;
-
-        foreach ($this->visibilities as $row) {
-            $max = max($row);
-            if ($max > $result) {
-                $result = $max;
-            }
-        }
-
-        return $result;
-    }
-
-
+    /**
+     * Util print matrix
+     */
     public function print(): void
     {
         $HIDDEN = "\033[1m %s \033[0m";
@@ -135,7 +88,7 @@ final class Treetop
 
         foreach ($this->visibilities as $row) {
             foreach ($row as $tree) {
-                print_r(sprintf($tree === 1 ? $VISIBLE : $HIDDEN, $tree));
+                print_r(sprintf($tree ? $VISIBLE : $HIDDEN, $tree));
             }
             print_r("\n");
         }
