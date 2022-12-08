@@ -33,8 +33,10 @@ class Puzzle extends AbstractPuzzle
 
     public function exec2(array $input = []): int
     {
-        $result = 0;
+        $treetop = new Treetop($input);
+        $treetop->analice2();
+        // $treetop->print();
 
-        return $result;
+        return $treetop->maxScore();
     }
 }
