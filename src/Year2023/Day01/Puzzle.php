@@ -12,7 +12,7 @@ class Puzzle extends AbstractPuzzle
 
         foreach ($input as $str) {
             $str = preg_replace('/[a-z]/', '', $str);
-            $result += intval(substr($str, 0, 1) . substr($str, -1, 1)); 
+            $result += intval(substr($str, 0, 1) . substr($str, -1, 1));
         }
 
         return $result;
