@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Year2024\Day01;
+namespace Tests\Year2024\Day02;
 
-use App\Year2024\Day01\Puzzle;
+use App\Year2024\Day02\Puzzle;
 use PHPUnit\Framework\TestCase;
 
 class PuzzleTest extends TestCase
@@ -26,11 +26,11 @@ class PuzzleTest extends TestCase
 
     public function testExec1(): void
     {
-        $this->assertEquals(11, $this->runner->exec1($this->array));
+        $this->assertEquals(2, $this->runner->exec1($this->array));
     }
 
     public function testExec2(): void
     {
-        $this->assertEquals(31, $this->runner->exec2($this->array));
+        $this->assertEquals(4, $this->runner->exec2($this->array));
     }
 }
