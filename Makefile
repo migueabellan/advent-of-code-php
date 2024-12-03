@@ -24,7 +24,7 @@ test:
 	@docker-compose exec php php vendor/bin/phpunit --testdox tests/Year2024/
 
 day1:
-	@docker-compose exec php bin/console puzzle:exec -y 2024 -d 02 -p 1
+	@docker-compose exec php bin/console puzzle:exec -y 2024 -d 03 -p 1
  
 day2:
-	@docker-compose exec php bin/console puzzle:exec -y 2024 -d 02 -p 2
+	@docker-compose exec php bin/console puzzle:exec -y 2024 -d 03 -p 2
