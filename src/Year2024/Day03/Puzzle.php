@@ -18,7 +18,7 @@ class Puzzle extends AbstractPuzzle
                 foreach ($matches as $match) {
                     if ($match[0] === 'do()') {
                         $enabled = true;
-                    } elseif ($match[0] === "don't()") {               
+                    } elseif ($match[0] === "don't()") {
                         $enabled = false;
                     } elseif ($enabled) {
                         $array[] = $match[0];
@@ -60,4 +60,3 @@ class Puzzle extends AbstractPuzzle
         return $result;
     }
 }
- 
