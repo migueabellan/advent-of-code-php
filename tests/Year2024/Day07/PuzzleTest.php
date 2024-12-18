@@ -26,7 +26,7 @@ class PuzzleTest extends TestCase
 
     public function testExec1(): void
     {
-        $this->assertEquals(0, $this->runner->exec1($this->array));
+        $this->assertEquals(3749, $this->runner->exec1($this->array));
     }
 
     public function testExec2(): void

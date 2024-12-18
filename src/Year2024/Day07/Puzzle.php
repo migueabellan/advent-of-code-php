@@ -27,51 +27,74 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
 
-    private function permutations(int $length, array $operators): array
+    private function equations(array $numbers, array $operators): array
     {
-        $permutations = [];
+        $length = count($numbers) - 1;
+
+        $equations = [];
 
         for ($i = 0; $i < pow(count($operators), $length); $i++) {
-            $converted = base_convert($i, 10, count($operators));
+            $converted = base_convert((string)$i, 10, count($operators));
             $str = str_pad($converted, $length, '0', STR_PAD_LEFT);
 
-            $permutations[] = str_split(str_replace(range(0, count($operators)), $operators, $str));
+            $permutation = str_split(str_replace(range(0, count($operators)), $operators, $str));
+
+            $equation = [];
+            foreach ($numbers as $k => $number) {
+                $equation[] = $number;
+                if (isset($permutation[$k])) {
+                    $equation[] = $permutation[$k];
+                }
+            }
+
+            $equations[] = $equation;
         }
 
-        return $permutations;
+
+        return $equations;
     }
 
-    private function eval(array $operation): int
+    private function eval(array $equation): int
     {
-        $result = $operation[0];
+        $result = $equation[0];
 
-        for ($i = 1; $i < count($operation); $i+=2) {
-            if ($operation[$i] === '+') {
-                $result += intval($operation[$i + 1]);
-            } else {
-                $result *= intval($operation[$i + 1]);
+        for ($i = 1; $i < count($equation); $i+=2) {
+            if ($equation[$i] === '+') {
+                $result += intval($equation[$i + 1]);
+            } elseif ($equation[$i] === '*') {
+                $result *= intval($equation[$i + 1]);
             }
         }
 
         return $result;
     }
 
+    /*
+    private function concatenate(array $equation): array
+    {
+        // print_r($equation);
+
+        for ($i = 1; $i < count($equation); $i+=2) {
+            if ($equation[$i] === '|') {
+                $equation[$i] = intval($equation[$i - 1].$equation[$i + 1]);
+                unset($equation[$i - 1]);
+                unset($equation[$i + 1]);
+            }
+        }
+
+        // print_r($equation); die;
+
+        return array_values($equation);
+    }
+    */
+
     public function exec1(array $input = []): int
     {
         $result = 0;
 
         foreach ($input as $line) {
-            $permutations = $this->permutations(count($line['numbers']) - 1, ['+', '*']);
-
-            foreach ($permutations as $permutation) {
-                $equation = [];
-                foreach ($line['numbers'] as $k => $number) {
-                    $equation[] = $number;
-                    if (isset($permutation[$k])) {
-                        $equation[] = $permutation[$k];
-                    }
-                }
-
+            $equations = $this->equations($line['numbers'], ['+', '*']);
+            foreach ($equations as $equation) {
                 if ($this->eval($equation) === $line['result']) {
                     $result += $line['result'];
                     break;
@@ -84,7 +107,29 @@ class Puzzle extends AbstractPuzzle
  
     public function exec2(array $input = []): int
     {
+        // ini_set('memory_limit', '-1');
+
         $result = 0;
+
+        /*
+        foreach ($input as $line) {
+            $equations = $this->equations($line['numbers'], ['+', '*', '|']);
+
+            // $equation = $this->concatenate($equations[6]);
+            // print_r($equation); die;
+
+
+            foreach ($equations as $equation) {
+                $equation = $this->concatenate($equation);
+                if ($this->eval($equation) === $line['result']) {
+                    $result += $line['result'];
+                    break;
+                }
+            }
+        }
+
+        // tolow: 5837989715841
+        */
 
         return $result;
     }
