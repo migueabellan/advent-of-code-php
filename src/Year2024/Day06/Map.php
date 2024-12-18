@@ -2,72 +2,46 @@
 
 namespace App\Year2024\Day06;
 
-use App\Enums\Direction;
-
 final class Map
 {
-    private const GUARD = '^';
-    private const OBSTRUCTION = '#';
-    private const VISITED = 'X';
+    public const GUARD = '^';
+    public const OBSTRUCTION = '#';
+    public const VISITED = 'X';
 
-    private Direction $direction;
-    private int $x;
-    private int $y;
-
-    public function __construct(private array $array)
-    {
-        for ($i = 0; $i < count($this->array); $i++) {
-            for ($j = 0; $j < count($this->array); $j++) {
-                if ($this->array[$i][$j] === self::GUARD) {
-                    $this->direction = Direction::UP;
-                    $this->x = $i;
-                    $this->y = $j;
-                }
-            }
-        }
+    public function __construct(
+        private array $array,
+        private Guard $guard,
+    ) {
     }
 
-    public function move(): bool
+    public function array(): array
     {
-        $exist = [];
+        return $this->array;
+    }
+
+    public function walk(): void
+    {
+        $obstructions = [];
 
         while (true) {
-            $this->array[$this->x][$this->y] = self::VISITED;
+            $this->array[$this->guard->y()][$this->guard->x()] = self::VISITED;
 
-            $x = $this->x;
-            $y = $this->y;
-            switch ($this->direction) {
-                case Direction::UP:
-                    $x = $this->x - 1;
-                    break;
-                case Direction::RIGHT:
-                    $y = $this->y + 1;
-                    break;
-                case Direction::DOWN:
-                    $x = $this->x + 1;
-                    break;
-                case Direction::LEFT:
-                    $y = $this->y - 1;
-                    break;
+            $x = $this->guard->nextX();
+            $y = $this->guard->nextY();
+
+            if (!isset($this->array[$y][$x])) {
+                break;
             }
 
-            if (!isset($this->array[$x][$y])) {
-                return true;
-            }
-
-            if ($this->array[$x][$y] === self::OBSTRUCTION) {
-
-                // part2
-                if (isset($exist[$this->x][$this->y][$this->direction->value])) { // phpcs:disable
-                    return false;
+            if ($this->array[$y][$x] === self::OBSTRUCTION) {
+                if (isset($obstructions[$this->guard->__toString()])) {
+                    throw new \Exception('Infinite loop');
                 }
-                $exist[$this->x][$this->y][$this->direction->value] = true; // phpcs:disable
-                // part2
+                $obstructions[$this->guard->__toString()] = true;
 
-                $this->direction = $this->direction->turnLeft();
+                $this->guard->turnRight();
             } else {
-                $this->x = $x;
-                $this->y = $y;
+                $this->guard->move();
             }
         }
     }

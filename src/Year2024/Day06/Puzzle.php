@@ -20,11 +20,27 @@ class Puzzle extends AbstractPuzzle
         return $array;
     }
 
+    
+    public function init(array $input): array
+    {
+        for ($y = 0; $y < count($input); $y++) {
+            for ($x = 0; $x < count($input); $x++) {
+                if ($input[$y][$x] === Map::GUARD) {
+                    return [$x, $y];
+                }
+            }
+        }
+
+        return [];
+    }
+
+
     public function exec1(array $input = []): int
     {
-        $map = new Map($input);
+        [$x, $y] = $this->init($input);
 
-        $map->move();
+        $map = new Map($input, new Guard($x, $y));
+        $map->walk();
 
         return $map->visited();
     }
@@ -33,20 +49,25 @@ class Puzzle extends AbstractPuzzle
     {
         $result = 0;
 
-        // $map = new Map($input);
-        // $map->move();
-        // $input = $map->array;
+        [$x, $y] = $this->init($input);
 
-        // print_r($input); die;
+        $map = new Map($input, new Guard($x, $y));
+        $map->walk();
+
+        $input = $map->array();
+        $input[$y][$x] = Map::GUARD;
 
         for ($i = 0; $i < count($input); $i++) {
             for ($j = 0; $j < count($input); $j++) {
-                if ($input[$i][$j] === '.') {
+                if ($input[$i][$j] === Map::VISITED) {
                     $aux = $input;
-                    $aux[$i][$j] = '#';
+                    $aux[$i][$j] = Map::OBSTRUCTION;
+                    
+                    $map = new Map($aux, new Guard($x, $y));
 
-                    $map = new Map($aux);
-                    if (!$map->move()) {
+                    try {
+                        $map->walk();
+                    } catch (\Exception $e) {
                         $result++;
                     }
                 }
