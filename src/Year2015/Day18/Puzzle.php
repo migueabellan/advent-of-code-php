@@ -3,7 +3,6 @@
 namespace App\Year2015\Day18;
 
 use App\Puzzle\AbstractPuzzle;
-use App\Year2015\Day18\Grid;
 
 class Puzzle extends AbstractPuzzle
 {

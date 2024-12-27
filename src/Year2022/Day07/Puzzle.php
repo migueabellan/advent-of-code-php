@@ -3,7 +3,6 @@
 namespace App\Year2022\Day07;
 
 use App\Puzzle\AbstractPuzzle;
-use App\Year2022\Day07\Computer;
 
 class Puzzle extends AbstractPuzzle
 {
