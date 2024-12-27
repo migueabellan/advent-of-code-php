@@ -5,7 +5,7 @@ namespace App\Puzzle;
 /**
  * Provides common features needed
  *
- * @author Miguel Ángel Abellán <info@migueabellan.es>
+ * @author Miguel Ángel Abellán
  */
 interface InterfacePuzzle
 {

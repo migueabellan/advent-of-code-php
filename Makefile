@@ -21,8 +21,8 @@ lint:
 	@docker-compose exec php composer parallel
 
 test:
-	@docker-compose exec php php vendor/bin/phpunit --testdox tests/Year2024/
+	@docker-compose exec php php vendor/bin/phpunit --testdox tests
 
-# make exec d=04 p=1
+# make exec y=2024 d=01 p=1
 exec:
-	@docker-compose exec php bin/console puzzle:exec -y 2024 -d ${d} -p ${p}
+	@docker-compose exec php bin/console puzzle:exec -y ${y} -d ${d} -p ${p}

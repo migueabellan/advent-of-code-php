@@ -11,8 +11,8 @@ class Puzzle extends AbstractPuzzle
         $result = 0;
 
         foreach ($input as $str) {
-            $str = preg_replace('/[a-z]/', '', $str);
-            $result += intval(substr($str, 0, 1) . substr($str, -1, 1));
+            $trebuchet = new Trebuchet($str);
+            $result += $trebuchet->calibration();
         }
 
         return $result;
@@ -21,6 +21,13 @@ class Puzzle extends AbstractPuzzle
     public function exec2(array $input = []): int
     {
         $result = 0;
+
+        foreach ($input as $str) {
+            $trebuchet = new Trebuchet($str);
+            $trebuchet->clean();
+
+            $result += $trebuchet->calibration();
+        }
 
         return $result;
     }
