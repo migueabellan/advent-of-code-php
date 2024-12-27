@@ -26,9 +26,7 @@ class Puzzle extends AbstractPuzzle
 
         foreach ($input as $str) {
             $cube = Cube::from($str);
-            if ($cube->isPossible()) {
-                $result += $cube->game;
-            }
+            $result += $cube->minimum();
         }
 
         return $result;

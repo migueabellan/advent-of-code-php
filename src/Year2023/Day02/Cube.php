@@ -8,16 +8,14 @@ final class Cube
     private const GREEN = 13;
     private const BLUE = 14;
 
-    private function __construct(
-        public int $game,
-        public array $rounds
-    ) {
+    private function __construct(public int $game, public array $rounds)
+    {
     }
 
     public static function from(string $str): self
     {
         preg_match('/Game (\d+): (.+)/', $str, $matches);
-        $id = intval($matches[1]);
+        $game = intval($matches[1]);
 
         $rounds = [];
         foreach (explode(';', $matches[2]) as $v) {
@@ -34,7 +32,7 @@ final class Cube
             $rounds[] = $color;
         }
 
-        return new self($id, $rounds);
+        return new self($game, $rounds);
     }
 
     public function isPossible(): bool
@@ -46,5 +44,20 @@ final class Cube
         }
 
         return true;
+    }
+
+    public function minimum(): int
+    {
+        $red = 0;
+        $green = 0;
+        $blue = 0;
+
+        foreach ($this->rounds as $round) {
+            $red = max($red, $round['red']);
+            $green = max($green, $round['green']);
+            $blue = max($blue, $round['blue']);
+        }
+
+        return $red * $green * $blue;
     }
 }
