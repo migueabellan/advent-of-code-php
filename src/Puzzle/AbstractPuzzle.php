@@ -9,11 +9,11 @@ namespace App\Puzzle;
  */
 abstract class AbstractPuzzle implements InterfacePuzzle
 {
-    private float $ini_time = 0;
+    private float $startTime = 0;
 
     public function __construct()
     {
-        $this->ini_time = microtime(true) * 1000;
+        $this->startTime = microtime(true) * 1000;
     }
     
     /**
@@ -41,8 +41,9 @@ abstract class AbstractPuzzle implements InterfacePuzzle
      */
     public function write(string $string): void
     {
-        echo "\nResult: \e[0;30;42m " . $string . " \e[0m\n\n";
+        echo "Result: \e[0;30;42m " . $string . " \e[0m\n\n";
 
-        echo 'Time: ' . round((microtime(true) * 1000) - $this->ini_time, 2) . " ms\n";
+        echo 'Time: ' . round((microtime(true) * 1000) - $this->startTime, 2) . " ms\n";
+        echo 'Usage: ' . round(memory_get_peak_usage() / 1024 / 1024, 2) . " MBs\n";
     }
 }
